@@ -1,3 +1,5 @@
+export const safeFn = fn => (...args) => (fn ? fn(...args) : undefined)
+
 export function isObject(obj) {
     return obj !== null && obj !== undefined && obj.constructor === Object
 }

@@ -1,6 +1,24 @@
 /*globals test, expect*/
 import * as yup from "yup"
-import { isObject, isEmpty, extractYupErrors } from "../src/helpers"
+import { safeFn, isObject, isEmpty, extractYupErrors } from "../src/helpers"
+
+test("safeFn, null function", () => {
+    const safeInvoke = safeFn(null)
+
+    expect(safeInvoke()).toBe(undefined)
+})
+
+test("safeFn, valid function, no args", () => {
+    const safeInvoke = safeFn(() => 1)
+
+    expect(safeInvoke()).toBe(1)
+})
+
+test("safeFn, valid function, many args", () => {
+    const safeInvoke = safeFn((num, text) => num + text)
+
+    expect(safeInvoke(1, "hello")).toBe("1hello")
+})
 
 test("an object", () => {
     expect(isObject({})).toBe(true)

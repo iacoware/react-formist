@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { isObject, isEmpty, extractYupErrors } from "./helpers"
+import { safeFn, isObject, isEmpty, extractYupErrors } from "./helpers"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 
@@ -7,9 +7,7 @@ const useFormist = (initialValues = {}, options = {}) => {
     const [values, setValues] = useState(initialValues)
     const [errors, setErrors] = useState({})
 
-    const onSubmit = options.onSubmit || (() => {})
-    const change = (name, value) =>
-        setValues(prev => ({ ...prev, [name]: value }))
+    const optionsOnSubmit = safeFn(options.onSubmit)
 
     const validate = async () => {
         //Maybe would be a better fit?
@@ -30,32 +28,37 @@ const useFormist = (initialValues = {}, options = {}) => {
         const errs = await validate()
         if (hasErrors(errs)) return
 
-        await onSubmit(values)
+        await optionsOnSubmit(values)
         return values
     }
 
+    const change = (name, value) =>
+        setValues(prev => ({ ...prev, [name]: value }))
+
+    const fieldProps = name => ({
+        value: values[name],
+        error: errors[name],
+        onChange(e) {
+            change(name, e.target.value)
+        },
+    })
+
+    const formProps = () => ({
+        onSubmit(e) {
+            e.preventDefault()
+            return submit()
+        },
+    })
+
     return {
+        fieldProps,
+        formProps,
         values,
         errors,
-        getFieldProps(name) {
-            return {
-                value: values[name],
-                error: errors[name],
-                onChange(e) {
-                    change(name, e.target.value)
-                },
-            }
-        },
-        getFormProps() {
-            return {
-                onSubmit(e) {
-                    e.preventDefault()
-                    return submit()
-                },
-            }
-        },
         submit,
         change,
+        getFieldProps: fieldProps, //formal alias
+        getFormProps: formProps, // formal alias
     }
 }
 
