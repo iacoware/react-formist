@@ -1,0 +1,28 @@
+{
+    "name": "formist",
+    "version": "1.0.0",
+    "description": "react hook to handle forms",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "Massimo Iacolare",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^16.12.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.7.7",
+        "@babel/preset-env": "^7.8.3",
+        "@babel/preset-react": "^7.7.4",
+        "@testing-library/react-hooks": "^3.2.1",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-react": "^7.17.0",
+        "jest": "^24.9.0",
+        "prettier": "^1.19.1",
+        "react-test-renderer": "^16.12.0",
+        "yup": "^0.28.0"
+    }
+}
