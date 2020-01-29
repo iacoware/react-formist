@@ -9,6 +9,8 @@ const useFormist = (initialValues, options) => {
     const [values, setValues] = useState(initialValues)
     const [errors, setErrors] = useState({})
 
+    const getValue = name => values[name] || ""
+    const getError = name => errors[name] || ""
     const optionsOnSubmit = safeFn(options.onSubmit)
 
     const validate = async () => {
@@ -38,8 +40,9 @@ const useFormist = (initialValues, options) => {
         setValues(prev => ({ ...prev, [name]: value }))
 
     const fieldProps = name => ({
-        value: values[name],
-        error: errors[name],
+        name: name,
+        value: getValue(name),
+        error: getError(name),
         onChange(e) {
             change(name, e.target.value)
         },

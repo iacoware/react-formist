@@ -30,12 +30,23 @@ test("render initial values", () => {
 })
 
 test("change value", () => {
+    const initialValues = { firstName: "Max" }
     const { getByDisplayValue, getByText } = render(
-        <AddressForm values={{ firstName: "Max" }} />,
+        <AddressForm values={initialValues} />,
     )
     const input = getByDisplayValue("Max")
 
     fireEvent.change(input, { target: { value: "Fred" } })
+    const text = getByText("Fred")
+
+    expect(text).not.toBeNull()
+})
+
+test("change value outside initial values", () => {
+    const { getByText, container } = render(<AddressForm values={{}} />)
+    const firstNameInput = container.querySelector('input[name="firstName"]')
+
+    fireEvent.change(firstNameInput, { target: { value: "Fred" } })
     const text = getByText("Fred")
 
     expect(text).not.toBeNull()
