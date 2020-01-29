@@ -3,7 +3,9 @@ import { safeFn, isObject, isEmpty, extractYupErrors } from "./helpers"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 
-const useFormist = (initialValues = {}, options = {}) => {
+const useFormist = (initialValues, options) => {
+    initialValues = initialValues || {}
+    options = options || {}
     const [values, setValues] = useState(initialValues)
     const [errors, setErrors] = useState({})
 

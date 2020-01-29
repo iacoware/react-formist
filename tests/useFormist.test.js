@@ -3,9 +3,11 @@ import { renderHook } from "@testing-library/react-hooks"
 import useFormist from "../src/useFormist"
 
 test("no initial values", () => {
-    const { result } = renderHook(() => useFormist())
+    const { result: result1 } = renderHook(() => useFormist())
+    const { result: result2 } = renderHook(() => useFormist(null))
 
-    expect(getValues(result)).toStrictEqual({})
+    expect(getValues(result1)).toStrictEqual({})
+    expect(getValues(result2)).toStrictEqual({})
 })
 
 test("initial values", () => {
