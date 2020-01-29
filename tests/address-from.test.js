@@ -16,3 +16,11 @@ const AddressForm = () => {
 test("render address form", () => {
     const { getByText, getByRole } = render(<AddressForm />)
 })
+
+test("render initial values", () => {
+    const { getByDisplayValue } = render(<AddressForm />)
+
+    const input = getByDisplayValue("Max")
+
+    expect(input).not.toBeNull()
+})
