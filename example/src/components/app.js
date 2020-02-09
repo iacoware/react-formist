@@ -1,29 +1,35 @@
 import React, { useState } from "react"
 import useFormist from "../../../src/useFormist"
 
-const useFormist2 = (initialValues = {}, options = {}) => {
-    //Let's see what happens...
-    const [values, setValues] = useState(initialValues)
-}
-
 function AddressForm({ onSubmit }) {
-    //const [value, setValue] = useState("pluto")
-    const formist = useFormist()
+    const formist = useFormist(null, {
+        onSubmit,
+    })
 
-    // const formProps = formist.getFormProps()
-    // const fieldProps = formist.getFieldProps("firstName")
-    // console.log("Formist", formist)
-    // console.log("Form props", formProps)
-    // console.log("Field props", fieldProps)
-
-    return <h1>here goes a form...</h1>
+    return (
+        <form {...formist.formProps()}>
+            <div>
+                <input type="text" {...formist.fieldProps("firstName")} />
+            </div>
+            <div>
+                <input type="text" {...formist.fieldProps("lastName")} />
+            </div>
+            <button>Submit</button>
+        </form>
+    )
 }
 
 const App = () => {
+    const [formValues, setFormValues] = useState({})
+
+    const onSubmit = values => setFormValues(values)
+
     return (
         <div>
             <h1>Address form</h1>
-            <AddressForm />
+            <AddressForm onSubmit={onSubmit} />
+
+            <div>{JSON.stringify(formValues, null, 2)}</div>
         </div>
     )
 }
