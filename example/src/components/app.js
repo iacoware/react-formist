@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import useFormist from "react-formist"
+import useFormist from "../../../src/useFormist"
 
 const useFormist2 = (initialValues = {}, options = {}) => {
     //Let's see what happens...
@@ -8,7 +8,7 @@ const useFormist2 = (initialValues = {}, options = {}) => {
 
 function AddressForm({ onSubmit }) {
     //const [value, setValue] = useState("pluto")
-    const formist = useFormist2()
+    const formist = useFormist()
 
     // const formProps = formist.getFormProps()
     // const fieldProps = formist.getFieldProps("firstName")
