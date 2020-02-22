@@ -1,9 +1,26 @@
 # Formist - minimal react hook form handler
 
-Usage
+### Run the example
 
-```
-[TBD]
-```
+`npm run example`
 
-Check [the example]() for more
+### Usage
+
+```js
+function AddressForm({ onSubmit }) {
+    const formist = useFormist(null, {
+        onSubmit,
+    })
+
+    return (
+        <form {...formist.formProps()}>
+            <div>
+                <input type="text" {...formist.fieldProps("firstName")} />
+            </div>
+            <div>
+                <input type="text" {...formist.fieldProps("lastName")} />
+            </div>
+            <button>Submit</button>
+        </form>
+    )
+```
