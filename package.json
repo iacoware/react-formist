@@ -2,14 +2,20 @@
     "name": "react-formist",
     "version": "0.0.1",
     "description": "react hook to handle forms",
-    "main": "src/useFormist.js",
-    "scripts": {
-        "test": "jest",
-        "build": "parcel build src/useFormist.js",
-        "example": "parcel ./example/index.html --no-autoinstall --open"
-    },
     "author": "Massimo Iacolare",
     "license": "MIT",
+    "main": "dist/useFormist.js",
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "url": "https://github.com/iacoware/react-formist"
+    },
+    "scripts": {
+        "test": "jest",
+        "build": "eslint src && jest && parcel build src/useFormist.js",
+        "example": "parcel ./example/index.html --no-autoinstall --open"
+    },
     "peerDependencies": {
         "react": "^16.12.0"
     },
