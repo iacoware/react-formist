@@ -13,12 +13,12 @@ function AddressForm({ onSubmit }) {
     })
 
     return (
-        <form {...formist.formProps()}>
+        <form {...formist.form()}>
             <div>
-                <input type="text" {...formist.fieldProps("firstName")} />
+                <input type="text" {...formist.field("firstName")} />
             </div>
             <div>
-                <input type="text" {...formist.fieldProps("lastName")} />
+                <input type="text" {...formist.field("lastName")} />
             </div>
             <button>Submit</button>
         </form>

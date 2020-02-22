@@ -39,7 +39,7 @@ const useFormist = (initialValues, options) => {
     const change = (name, value) =>
         setValues(prev => ({ ...prev, [name]: value }))
 
-    const fieldProps = name => ({
+    const field = name => ({
         name: name,
         value: getValue(name),
         error: getError(name),
@@ -48,7 +48,7 @@ const useFormist = (initialValues, options) => {
         },
     })
 
-    const formProps = () => ({
+    const form = () => ({
         onSubmit(e) {
             e.preventDefault()
             return submit()
@@ -56,14 +56,14 @@ const useFormist = (initialValues, options) => {
     })
 
     return {
-        fieldProps,
-        formProps,
+        field,
+        form,
         values,
         errors,
         submit,
         change,
-        getFieldProps: fieldProps, //formal alias
-        getFormProps: formProps, // formal alias
+        getFieldProps: field, //formal alias
+        getFormProps: form, // formal alias
     }
 }
 

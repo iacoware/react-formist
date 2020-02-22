@@ -8,7 +8,7 @@ const AddressForm = ({ values }) => {
 
     return (
         <div>
-            <input type="text" {...formist.fieldProps("firstName")} />
+            <input type="text" {...formist.field("firstName")} />
             <p>{formist.values.firstName}</p>
         </div>
     )
