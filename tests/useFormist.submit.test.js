@@ -46,4 +46,18 @@ test("form submit", async () => {
     return expect(submitted).toBe(true)
 })
 
+test("submit button click", async () => {
+    const initialValues = { firstName: "John", age: 23 }
+    let submitted = false
+    const { result } = renderHook(() =>
+        useFormist(initialValues, {
+            onSubmit: () => (submitted = true),
+        }),
+    )
+
+    await result.current.getSubmitButtonProps().onClick(event())
+
+    return expect(submitted).toBe(true)
+})
+
 const event = () => ({ preventDefault() {} })

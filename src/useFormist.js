@@ -55,15 +55,24 @@ const useFormist = (initialValues, options) => {
         },
     })
 
+    const submitButton = () => ({
+        onClick(e) {
+            e.preventDefault()
+            return submit()
+        },
+    })
+
     return {
         field,
         form,
+        submitButton,
         values,
         errors,
         submit,
         change,
         getFieldProps: field, //formal alias
         getFormProps: form, // formal alias
+        getSubmitButtonProps: submitButton, // formal alias
     }
 }
 
