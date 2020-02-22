@@ -1,14 +1,15 @@
-/*globals test, expect*/
+/*globals test, expect, jest*/
 import React from "react"
-import { render, fireEvent, waitForElement } from "@testing-library/react"
+import { render, fireEvent, waitForElement, wait } from "@testing-library/react"
 import useFormist from "../src/useFormist"
 
-const AddressForm = ({ values }) => {
-    const formist = useFormist(values, {})
+const AddressForm = ({ values, onSubmit }) => {
+    const formist = useFormist(values, { onSubmit })
 
     return (
         <div>
             <input type="text" {...formist.field("firstName")} />
+            <button {...formist.submitButton()}>Submit</button>
             <p>{formist.values.firstName}</p>
         </div>
     )
@@ -51,3 +52,19 @@ test("change value outside initial values", () => {
 
     expect(text).not.toBeNull()
 })
+
+test("click submit button", async () => {
+    const onSubmit = jest.fn()
+    const { getByText } = render(
+        <AddressForm values={{}} onSubmit={onSubmit} />,
+    )
+
+    const submitButton = getByText("Submit")
+    fireEvent.click(submitButton, event())
+
+    await wait()
+
+    expect(onSubmit.mock.calls.length).toBe(1)
+})
+
+const event = value => ({ preventDefault() {}, target: { value: value } })
