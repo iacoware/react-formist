@@ -6,7 +6,8 @@
     "license": "MIT",
     "main": "dist/useFormist.js",
     "files": [
-        "dist"
+        "dist/useFormist.js",
+        "dist/useFormist.js.map"
     ],
     "repository": {
         "url": "https://github.com/iacoware/react-formist"
