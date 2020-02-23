@@ -36,8 +36,18 @@ const useFormist = (initialValues, options) => {
         return values
     }
 
-    const change = (name, value) =>
-        setValues(prev => ({ ...prev, [name]: value }))
+    const isArray = name => name[0] === "["
+    const arrayIndex = name => parseInt(name.slice(1).slice(0, -1))
+
+    const change = (name, value) => {
+        if (isArray(name))
+            return setValues(prev => {
+                const newValues = [...prev]
+                newValues[arrayIndex(name)] = value
+                return newValues
+            })
+        else return setValues(prev => ({ ...prev, [name]: value }))
+    }
 
     const field = name => ({
         name: name,
