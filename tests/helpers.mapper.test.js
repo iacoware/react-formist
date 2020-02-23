@@ -1,12 +1,10 @@
 /*globals test, expect*/
-import useFormist from "../src/useFormist"
+import deepmerge from "deepmerge"
 
 const head = arr => arr[0]
 const tail = arr => arr.slice(1)
 
-const mapPropsToObj = values => {
-    const entries = Object.entries(values)
-    const entry = entries[0]
+const mapEntryToObj = entry => {
     const [name, value] = entry
 
     const parts = name.split(".")
@@ -21,11 +19,34 @@ const mapPropsToObj = values => {
     return result
 }
 
+const mapPropsToObj = values => {
+    const entries = Object.entries(values)
+
+    const results = entries
+        .map(entry => mapEntryToObj(entry))
+        .reduce((acc, cur) => deepmerge(acc, cur), {})
+
+    return results
+}
+
 test("one element", () => {
     const values = { "first.second.third": 42 }
-    console.log(Object.entries(values))
 
     const result = mapPropsToObj(values)
 
     expect(result).toStrictEqual({ first: { second: { third: 42 } } })
+})
+
+test("many elements", () => {
+    const values = {
+        "first.second.third1": 42,
+        "first.second.third2": "is",
+        "first.second.third3": "the answer",
+    }
+
+    const result = mapPropsToObj(values)
+
+    expect(result).toStrictEqual({
+        first: { second: { third1: 42, third2: "is", third3: "the answer" } },
+    })
 })
