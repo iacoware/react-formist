@@ -1,5 +1,6 @@
 /*globals test, expect*/
 import deepmerge from "deepmerge"
+import { isObject } from "../src/helpers"
 
 const head = arr => arr[0]
 const tail = arr => arr.slice(1)
@@ -44,6 +45,51 @@ const mapPropsToObj = values => {
     return results
 }
 
+const isNum = text => !isNaN(parseInt(text))
+
+const mapIndexesToArray = obj => {
+    if (!isObject(obj)) return obj
+
+    const keys = Object.keys(obj)
+    if (!keys.length) return obj
+
+    if (isNum(keys[0])) return Object.values(obj)
+
+    Object.entries(obj).forEach(([name, value]) => {
+        obj[name] = mapIndexesToArray(value)
+    })
+
+    return obj
+}
+
+test("custom object arrays, one level", () => {
+    const obj = {
+        0: { city: "New York" },
+        1: { city: "Los Angeles" },
+    }
+    const expected = [{ city: "New York" }, { city: "Los Angeles" }]
+
+    const result = mapIndexesToArray(obj)
+
+    expect(result).toStrictEqual(expected)
+})
+
+test("custom object arrays, nested", () => {
+    const obj = {
+        addresses: {
+            0: { city: "New York" },
+            1: { city: "Los Angeles" },
+        },
+    }
+    const expected = {
+        addresses: [{ city: "New York" }, { city: "Los Angeles" }],
+    }
+
+    const result = mapIndexesToArray(obj)
+
+    expect(result).toStrictEqual(expected)
+})
+
 test("one element", () => {
     const values = { "first.second.third": 42 }
 
@@ -81,8 +127,8 @@ test("primitive value arrays", () => {
 
 test.skip("custom object arrays", () => {
     const values = {
-        "customer.addresses[0].street": "5th avenue",
-        "customer.addresses[0].city": "New York",
+        "customer.addresses.0.street": "5th avenue",
+        "customer.addresses.0.city": "New York",
     }
 
     const result = mapPropsToObj(values)
