@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { safeFn, isObject, isEmpty } from "./helpers"
 import { extractYupErrors } from "./helpers.yup"
+import { unflatten, unflattenNameValue } from "./mapper"
+import deepmerge from "deepmerge"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 
@@ -37,17 +39,10 @@ const useFormist = (initialValues, options) => {
         return values
     }
 
-    const isArray = name => name[0] === "["
-    const arrayIndex = name => parseInt(name.slice(1).slice(0, -1))
-
     const change = (name, value) => {
-        if (isArray(name))
-            return setValues(prev => {
-                const newValues = [...prev]
-                newValues[arrayIndex(name)] = value
-                return newValues
-            })
-        else return setValues(prev => ({ ...prev, [name]: value }))
+        const curr = unflattenNameValue(name, value)
+        return setValues(prev => deepmerge(prev, curr))
+        // return setValues(prev => ({ ...prev, [name]: value }))
     }
 
     const field = name => ({

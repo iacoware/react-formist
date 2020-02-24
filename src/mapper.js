@@ -40,3 +40,9 @@ export const unflatten = flatObj => {
     const unmapped = mapIndexesToArray(unflattened)
     return unmapped
 }
+
+export const unflattenNameValue = (name, value) => {
+    const unflattened = mapEntryToObj(name, value)
+    const unmapped = mapIndexesToArray(unflattened)
+    return unmapped
+}
