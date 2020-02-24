@@ -2,7 +2,7 @@ import { isObject, isInteger, head, tail, mergeAll } from "./helpers"
 
 const createObj = (name, value) => ({ [name]: value })
 
-export const pathValue = (path, obj) => {
+export const getPath = (path, obj) => {
     const parts = path.split(".")
 
     let current = obj
