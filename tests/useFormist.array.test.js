@@ -2,7 +2,22 @@
 import { renderHook, act } from "@testing-library/react-hooks"
 import useFormist from "../src/useFormist"
 
-test("many elements", () => {
+test("nested initial values", () => {
+    const initialValues = {
+        customer: {
+            name: "Fred George",
+            addresses: [{ city: "New York" }, { city: "Los Angeles" }],
+        },
+    }
+    const { result } = renderHook(() => useFormist(initialValues))
+
+    const field = result.current.field("customer.addresses.1.city")
+
+    expect(field.name).toBe("customer.addresses.1.city")
+    expect(field.value).toBe("Los Angeles")
+})
+
+test("change nested values", () => {
     const { result } = renderHook(() => useFormist([]))
 
     act(() => {

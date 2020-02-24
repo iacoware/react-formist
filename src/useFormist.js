@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { safeFn, isObject, isEmpty } from "./helpers"
 import { extractYupErrors } from "./helpers.yup"
-import { unflatten, unflattenNameValue } from "./mapper"
+import { getPath, unflattenNameValue } from "./mapper"
 import deepmerge from "deepmerge"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
@@ -12,7 +12,7 @@ const useFormist = (initialValues, options) => {
     const [values, setValues] = useState(initialValues)
     const [errors, setErrors] = useState({})
 
-    const getValue = name => values[name] || ""
+    const getValue = name => getPath(name, values) || ""
     const getError = name => errors[name] || ""
     const optionsOnSubmit = safeFn(options.onSubmit)
 
