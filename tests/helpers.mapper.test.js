@@ -5,8 +5,6 @@ import { isObject } from "../src/helpers"
 const head = arr => arr[0]
 const tail = arr => arr.slice(1)
 const isArrayFromName = name => !!name.match(/(\w*)\[(\d+)\]/)
-const indexFromName = name =>
-    name.match(/(?<prop>\w*)\[(?<index>\d+)\]/).groups.index
 const propFromName = name =>
     name.match(/(?<prop>\w*)\[(?<index>\d+)\]/).groups.prop
 
@@ -42,7 +40,7 @@ const mapPropsToObj = values => {
         .map(entry => mapEntryToObj(entry))
         .reduce((acc, cur) => deepmerge(acc, cur), {})
 
-    return results
+    return mapIndexesToArray(results)
 }
 
 const isNum = text => !isNaN(parseInt(text))
@@ -168,7 +166,7 @@ test("primitive value arrays", () => {
     })
 })
 
-test.skip("custom object arrays", () => {
+test("custom object arrays", () => {
     const values = {
         "customer.addresses.0.street": "5th avenue",
         "customer.addresses.0.city": "New York",
