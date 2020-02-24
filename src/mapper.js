@@ -2,6 +2,11 @@ import { isObject, isInteger, head, tail, mergeAll } from "./helpers"
 
 const createObj = (name, value) => ({ [name]: value })
 
+export const pathValue = (path, obj) => {
+    const parts = name.split(".")
+    return obj[path]
+}
+
 export const mapEntryToObj = (name, value) => {
     const parts = name.split(".")
     const reversed = parts.reverse()
