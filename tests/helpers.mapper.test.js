@@ -1,66 +1,5 @@
 /*globals test, expect*/
-import deepmerge from "deepmerge"
-import { isObject } from "../src/helpers"
-
-const head = arr => arr[0]
-const tail = arr => arr.slice(1)
-const isArrayFromName = name => !!name.match(/(\w*)\[(\d+)\]/)
-const propFromName = name =>
-    name.match(/(?<prop>\w*)\[(?<index>\d+)\]/).groups.prop
-
-const createObjWith = (name, value) => {
-    if (isArrayFromName(name)) {
-        const propName = propFromName(name)
-        return { [propName]: [value] }
-    } else {
-        return { [name]: value }
-    }
-}
-
-const mapEntryToObj = entry => {
-    const [name, value] = entry
-
-    const parts = name.split(".")
-    const reversed = parts.reverse()
-
-    const deepest = createObjWith(head(reversed), value)
-    const withoutDeepest = tail(reversed)
-    const result = withoutDeepest.reduce(
-        (acc, cur) => createObjWith(cur, acc),
-        deepest,
-    )
-
-    return result
-}
-
-const mapPropsToObj = values => {
-    const entries = Object.entries(values)
-
-    const results = entries
-        .map(entry => mapEntryToObj(entry))
-        .reduce((acc, cur) => deepmerge(acc, cur), {})
-
-    return mapIndexesToArray(results)
-}
-
-const isNum = text => !isNaN(parseInt(text))
-
-const mapIndexesToArray = obj => {
-    if (!isObject(obj)) return obj
-
-    const keys = Object.keys(obj)
-    if (!keys.length) return obj
-
-    if (isNum(keys[0])) {
-        return Object.values(obj).map(value => mapIndexesToArray(value))
-    }
-
-    return Object.entries(obj)
-        .map(([name, value]) => {
-            return { [name]: mapIndexesToArray(value) }
-        })
-        .reduce((acc, cur) => deepmerge(acc, cur), {})
-}
+import { mapPropsToObj, mapIndexesToArray } from "../src/mapper"
 
 test("custom object arrays, flat", () => {
     const obj = {
@@ -155,8 +94,8 @@ test("many elements", () => {
 
 test("primitive value arrays", () => {
     const values = {
-        "customer.addresses[0]": "5th avenue",
-        "customer.addresses[1]": "8th avenue",
+        "customer.addresses.0": "5th avenue",
+        "customer.addresses.1": "8th avenue",
     }
 
     const result = mapPropsToObj(values)
