@@ -1,23 +1,23 @@
 /*globals test, expect*/
-import { pathValue } from "../src/mapper"
+import { pathValue as getPath } from "../src/mapper"
 
 test("one level", () => {
     const obj = { first: 42 }
 
-    const result = pathValue("first", obj)
+    const result = getPath("first", obj)
+
+    expect(result).toBe(42)
+})
+
+test("one element, many level", () => {
+    const obj = { first: { second: { third: 42 } } }
+
+    const result = getPath("first.second.third", obj)
 
     expect(result).toBe(42)
 })
 
 /*
-test("one element, many level", () => {
-    const values = { "first.second.third": 42 }
-
-    const result = mapPropsToObj(values)
-
-    expect(result).toStrictEqual({ first: { second: { third: 42 } } })
-})
-
 test("many elements, many levels", () => {
     const now = new Date()
     const values = {

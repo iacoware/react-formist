@@ -3,8 +3,13 @@ import { isObject, isInteger, head, tail, mergeAll } from "./helpers"
 const createObj = (name, value) => ({ [name]: value })
 
 export const pathValue = (path, obj) => {
-    const parts = name.split(".")
-    return obj[path]
+    const parts = path.split(".")
+
+    let current = obj
+    parts.forEach(part => {
+        current = current[part]
+    })
+    return current
 }
 
 export const mapEntryToObj = (name, value) => {
