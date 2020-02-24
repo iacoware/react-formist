@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { safeFn, isObject, isEmpty, extractYupErrors } from "./helpers"
+import { safeFn, isObject, isEmpty } from "./helpers"
+import { extractYupErrors } from "./helpers.yup"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 
