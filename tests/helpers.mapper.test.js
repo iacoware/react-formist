@@ -10,7 +10,7 @@ const indexFromName = name =>
 const propFromName = name =>
     name.match(/(?<prop>\w*)\[(?<index>\d+)\]/).groups.prop
 
-const initObjWith = (name, value) => {
+const createObjWith = (name, value) => {
     if (isArrayFromName(name)) {
         const propName = propFromName(name)
         return { [propName]: [value] }
@@ -25,10 +25,10 @@ const mapEntryToObj = entry => {
     const parts = name.split(".")
     const reversed = parts.reverse()
 
-    const deepest = initObjWith(head(reversed), value)
+    const deepest = createObjWith(head(reversed), value)
     const withoutDeepest = tail(reversed)
     const result = withoutDeepest.reduce(
-        (acc, cur) => initObjWith(cur, acc),
+        (acc, cur) => createObjWith(cur, acc),
         deepest,
     )
 
@@ -53,13 +53,15 @@ const mapIndexesToArray = obj => {
     const keys = Object.keys(obj)
     if (!keys.length) return obj
 
-    if (isNum(keys[0])) return Object.values(obj)
+    if (isNum(keys[0])) {
+        return Object.values(obj).map(value => mapIndexesToArray(value))
+    }
 
-    Object.entries(obj).forEach(([name, value]) => {
-        obj[name] = mapIndexesToArray(value)
-    })
-
-    return obj
+    return Object.entries(obj)
+        .map(([name, value]) => {
+            return { [name]: mapIndexesToArray(value) }
+        })
+        .reduce((acc, cur) => deepmerge(acc, cur), {})
 }
 
 test("custom object arrays, one level", () => {
@@ -83,6 +85,35 @@ test("custom object arrays, nested", () => {
     }
     const expected = {
         addresses: [{ city: "New York" }, { city: "Los Angeles" }],
+    }
+
+    const result = mapIndexesToArray(obj)
+
+    expect(result).toStrictEqual(expected)
+})
+
+test("custom object arrays, double nested", () => {
+    const obj = {
+        addresses: {
+            0: {
+                city: "Firenze",
+                translations: {
+                    0: { lang: "en", text: "Florence" },
+                    1: { lang: "es", text: "Florencia" },
+                },
+            },
+        },
+    }
+    const expected = {
+        addresses: [
+            {
+                city: "Firenze",
+                translations: [
+                    { lang: "en", text: "Florence" },
+                    { lang: "es", text: "Florencia" },
+                ],
+            },
+        ],
     }
 
     const result = mapIndexesToArray(obj)
