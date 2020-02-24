@@ -29,7 +29,7 @@ const App = () => {
             <h1>Address form</h1>
             <AddressForm onSubmit={onSubmit} />
 
-            <div>{JSON.stringify(formValues, null, 2)}</div>
+            <pre>{JSON.stringify(formValues, null, 2)}</pre>
         </div>
     )
 }
