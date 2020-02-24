@@ -1,32 +1,21 @@
-import deepmerge from "deepmerge"
-import { isObject, isInteger, head, tail } from "./helpers"
+import { isObject, isInteger, head, tail, mergeAll } from "./helpers"
 
 const createObj = (name, value) => ({ [name]: value })
 
-export const mapEntryToObj = entry => {
-    const [name, value] = entry
-
+export const mapEntryToObj = (name, value) => {
     const parts = name.split(".")
     const reversed = parts.reverse()
 
     const deepest = createObj(head(reversed), value)
-    const withoutDeepest = tail(reversed)
-    const result = withoutDeepest.reduce(
-        (acc, cur) => createObj(cur, acc),
-        deepest,
-    )
-
-    return result
+    const deepestLess = tail(reversed)
+    return deepestLess.reduce((acc, cur) => createObj(cur, acc), deepest)
 }
 
-export const mapPropsToObj = values => {
-    const entries = Object.entries(values)
-
-    const results = entries
-        .map(entry => mapEntryToObj(entry))
-        .reduce((acc, cur) => deepmerge(acc, cur), {})
-
-    return mapIndexesToArray(results)
+export const mapPropsToObj = flatObj => {
+    const props = Object.entries(flatObj).map(([name, value]) =>
+        mapEntryToObj(name, value),
+    )
+    return mergeAll(props)
 }
 
 export const mapIndexesToArray = obj => {
@@ -39,9 +28,15 @@ export const mapIndexesToArray = obj => {
         return Object.values(obj).map(value => mapIndexesToArray(value))
     }
 
-    return Object.entries(obj)
-        .map(([name, value]) => {
-            return { [name]: mapIndexesToArray(value) }
-        })
-        .reduce((acc, cur) => deepmerge(acc, cur), {})
+    const propsAsObj = Object.entries(obj).map(([name, value]) => ({
+        [name]: mapIndexesToArray(value),
+    }))
+
+    return mergeAll(propsAsObj)
+}
+
+export const unflatten = flatObj => {
+    const unflattened = mapPropsToObj(flatObj)
+    const unmapped = mapIndexesToArray(unflattened)
+    return unmapped
 }

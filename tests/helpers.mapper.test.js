@@ -1,5 +1,5 @@
 /*globals test, expect*/
-import { mapPropsToObj, mapIndexesToArray } from "../src/mapper"
+import { mapPropsToObj, mapIndexesToArray, unflatten } from "../src/mapper"
 
 test("custom object arrays, flat", () => {
     const obj = {
@@ -98,7 +98,7 @@ test("primitive value arrays", () => {
         "customer.addresses.1": "8th avenue",
     }
 
-    const result = mapPropsToObj(values)
+    const result = unflatten(values)
 
     expect(result).toStrictEqual({
         customer: { addresses: ["5th avenue", "8th avenue"] },
@@ -111,7 +111,7 @@ test("custom object arrays", () => {
         "customer.addresses.0.city": "New York",
     }
 
-    const result = mapPropsToObj(values)
+    const result = unflatten(values)
 
     expect(result).toStrictEqual({
         customer: { addresses: [{ city: "New York", street: "5th avenue" }] },
