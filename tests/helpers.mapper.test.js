@@ -64,6 +64,18 @@ const mapIndexesToArray = obj => {
         .reduce((acc, cur) => deepmerge(acc, cur), {})
 }
 
+test("custom object arrays, flat", () => {
+    const obj = {
+        0: "New York",
+        1: "Los Angeles",
+    }
+    const expected = ["New York", "Los Angeles"]
+
+    const result = mapIndexesToArray(obj)
+
+    expect(result).toStrictEqual(expected)
+})
+
 test("custom object arrays, one level", () => {
     const obj = {
         0: { city: "New York" },
