@@ -1,7 +1,7 @@
 /*globals test, expect*/
-import { mapPropsToObj, mapIndexesToArray, unflatten } from "../src/mapper"
+import { mapIndexesToArray } from "../src/mapper"
 
-test("custom object arrays, flat", () => {
+test("strings array", () => {
     const obj = {
         0: "New York",
         1: "Los Angeles",
@@ -13,7 +13,7 @@ test("custom object arrays, flat", () => {
     expect(result).toStrictEqual(expected)
 })
 
-test("custom object arrays, one level", () => {
+test("object array", () => {
     const obj = {
         0: { city: "New York" },
         1: { city: "Los Angeles" },
@@ -25,7 +25,7 @@ test("custom object arrays, one level", () => {
     expect(result).toStrictEqual(expected)
 })
 
-test("custom object arrays, nested", () => {
+test("object array, nested", () => {
     const obj = {
         addresses: {
             0: { city: "New York" },
@@ -41,7 +41,7 @@ test("custom object arrays, nested", () => {
     expect(result).toStrictEqual(expected)
 })
 
-test("custom object arrays, double nested", () => {
+test("object array, double nested", () => {
     const obj = {
         addresses: {
             0: {
@@ -68,52 +68,4 @@ test("custom object arrays, double nested", () => {
     const result = mapIndexesToArray(obj)
 
     expect(result).toStrictEqual(expected)
-})
-
-test("one element", () => {
-    const values = { "first.second.third": 42 }
-
-    const result = mapPropsToObj(values)
-
-    expect(result).toStrictEqual({ first: { second: { third: 42 } } })
-})
-
-test("many elements", () => {
-    const values = {
-        "first.second.third1": 42,
-        "first.second.third2": "is",
-        "first.second.third3": "the answer",
-    }
-
-    const result = mapPropsToObj(values)
-
-    expect(result).toStrictEqual({
-        first: { second: { third1: 42, third2: "is", third3: "the answer" } },
-    })
-})
-
-test("primitive value arrays", () => {
-    const values = {
-        "customer.addresses.0": "5th avenue",
-        "customer.addresses.1": "8th avenue",
-    }
-
-    const result = unflatten(values)
-
-    expect(result).toStrictEqual({
-        customer: { addresses: ["5th avenue", "8th avenue"] },
-    })
-})
-
-test("custom object arrays", () => {
-    const values = {
-        "customer.addresses.0.street": "5th avenue",
-        "customer.addresses.0.city": "New York",
-    }
-
-    const result = unflatten(values)
-
-    expect(result).toStrictEqual({
-        customer: { addresses: [{ city: "New York", street: "5th avenue" }] },
-    })
 })
