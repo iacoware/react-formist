@@ -11,6 +11,7 @@ const setPath = (path, value, obj) => {
     const partsMinusLast = parts.slice(0, -1)
     let current = newObj
     partsMinusLast.forEach(part => {
+        if (!current[part]) current[part] = {}
         current = current[part]
     })
     current[last(parts)] = value
@@ -50,4 +51,20 @@ test("many levels within an array", () => {
     expect(result.first.second[1].third).toBe(99)
     expect(result.first.second[0].third).toBe(42)
     expect(result.first.second.length).toBe(2)
+})
+
+test("last level missing", () => {
+    const obj = { first: { second: {} } }
+
+    const result = setPath("first.second.third", 68, obj)
+
+    expect(result.first.second.third).toBe(68)
+})
+
+test("many levels missing", () => {
+    const obj = {}
+
+    const result = setPath("first.second.third", 68, obj)
+
+    expect(result.first.second.third).toBe(68)
 })
