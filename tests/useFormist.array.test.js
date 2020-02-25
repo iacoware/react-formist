@@ -18,7 +18,7 @@ test("nested initial values", () => {
 })
 
 test("change nested values", () => {
-    const { result } = renderHook(() => useFormist([]))
+    const { result } = renderHook(() => useFormist())
 
     act(() => {
         result.current.change("customer.name", "Fred George")
@@ -35,7 +35,7 @@ test("change nested values", () => {
     })
 })
 
-test.skip("update nested value", () => {
+test("update nested value", () => {
     const initialValues = {
         customer: {
             name: "Fred George",
