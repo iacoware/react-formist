@@ -1,29 +1,6 @@
 /*globals test, expect*/
-import { last, isInteger, log } from "../src/helpers"
-import { getPath } from "../src/mapper"
-
-const deepClone = obj => JSON.parse(JSON.stringify(obj))
-
-const setPath = (path, value, obj) => {
-    const newObj = deepClone(obj)
-
-    const parts = path.split(".")
-    const partsMinusLast = parts.slice(0, -1)
-    let current = newObj
-    partsMinusLast.forEach((part, index) => {
-        const nextPart = parts[index + 1]
-        const mustBeAnArray = isInteger(nextPart)
-
-        if (!current[part]) {
-            if (mustBeAnArray) current[part] = []
-            else current[part] = {}
-        }
-        current = current[part]
-    })
-    current[last(parts)] = value
-
-    return newObj
-}
+import { log } from "../src/helpers"
+import { setPath } from "../src/mapper"
 
 test("does not mutate original", () => {
     const obj = { first: 42 }

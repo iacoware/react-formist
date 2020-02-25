@@ -1,4 +1,5 @@
-import { isObject, isInteger, head, tail, mergeAll } from "./helpers"
+//prettier-ignore
+import { isObject, isInteger, head, tail, last, mergeAll, deepClone } from "./helpers"
 
 const createObj = (name, value) => ({ [name]: value })
 
@@ -10,6 +11,27 @@ export const getPath = (path, obj) => {
         current = current[part]
     })
     return current
+}
+
+export const setPath = (path, value, obj) => {
+    const newObj = deepClone(obj)
+
+    const parts = path.split(".")
+    const partsMinusLast = parts.slice(0, -1)
+    let current = newObj
+    partsMinusLast.forEach((part, index) => {
+        const nextPart = parts[index + 1]
+        const mustBeAnArray = isInteger(nextPart)
+
+        if (!current[part]) {
+            if (mustBeAnArray) current[part] = []
+            else current[part] = {}
+        }
+        current = current[part]
+    })
+    current[last(parts)] = value
+
+    return newObj
 }
 
 export const mapEntryToObj = (name, value) => {

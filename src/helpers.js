@@ -13,6 +13,8 @@ export const head = arr => arr[0]
 export const tail = arr => arr.slice(1)
 export const last = arr => arr[arr.length - 1]
 
+export const deepClone = obj => JSON.parse(JSON.stringify(obj))
+
 export const mergeAll = objs =>
     objs.reduce((acc, cur) => deepmerge(acc, cur), {})
 
