@@ -42,12 +42,12 @@ test("many levels", () => {
     expect(result.first.second.third).toBe(68)
 })
 
-/*
-test("many levels within arrays", () => {
+test("many levels within an array", () => {
     const obj = { first: { second: [{ third: 42 }, { third: 68 }] } }
 
-    const result = getPath("first.second.1.third", obj)
+    const result = setPath("first.second.1.third", 99, obj)
 
-    expect(result).toBe(68)
+    expect(result.first.second[1].third).toBe(99)
+    expect(result.first.second[0].third).toBe(42)
+    expect(result.first.second.length).toBe(2)
 })
-*/
