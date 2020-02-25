@@ -1,6 +1,7 @@
 /*globals test, expect*/
 import * as yup from "yup"
 import { renderHook, act } from "@testing-library/react-hooks"
+import { log } from "../src/helpers"
 import useFormist from "../src/useFormist"
 
 test("validate through options.yupSchema", async () => {
@@ -20,7 +21,7 @@ test("validate through options.yupSchema", async () => {
     expect(getFieldProps("firstName", result).error).toBeDefined()
 })
 
-test.skip("nested schema", async () => {
+test("nested schema", async () => {
     let schema = yup.object().shape({
         fullName: yup.string().required(),
         address: yup.object().shape({
