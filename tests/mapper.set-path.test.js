@@ -1,5 +1,5 @@
 /*globals test, expect*/
-import { last } from "../src/helpers"
+import { last, isInteger } from "../src/helpers"
 import { getPath } from "../src/mapper"
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj))
@@ -10,8 +10,14 @@ const setPath = (path, value, obj) => {
     const parts = path.split(".")
     const partsMinusLast = parts.slice(0, -1)
     let current = newObj
-    partsMinusLast.forEach(part => {
-        if (!current[part]) current[part] = {}
+    partsMinusLast.forEach((part, index) => {
+        const nextPart = parts[index + 1]
+        const mustBeAnArray = isInteger(nextPart)
+
+        if (!current[part]) {
+            if (mustBeAnArray) current[part] = []
+            else current[part] = {}
+        }
         current = current[part]
     })
     current[last(parts)] = value
@@ -67,4 +73,13 @@ test("many levels missing", () => {
     const result = setPath("first.second.third", 68, obj)
 
     expect(result.first.second.third).toBe(68)
+})
+
+test("array level missing", () => {
+    const obj = {}
+
+    const result = setPath("first.second.1.third", 68, obj)
+
+    expect(Array.isArray(result.first.second)).toBe(true)
+    expect(result.first.second[1].third).toBe(68)
 })

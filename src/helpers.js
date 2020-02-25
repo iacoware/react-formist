@@ -15,3 +15,5 @@ export const last = arr => arr[arr.length - 1]
 
 export const mergeAll = objs =>
     objs.reduce((acc, cur) => deepmerge(acc, cur), {})
+
+export const log = obj => console.log(JSON.stringify(obj, null, 2))
