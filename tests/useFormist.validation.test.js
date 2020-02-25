@@ -1,5 +1,4 @@
 /*globals test, expect*/
-import * as yup from "yup"
 import { renderHook, act } from "@testing-library/react-hooks"
 import useFormist from "../src/useFormist"
 
@@ -21,23 +20,6 @@ test("validate through options.onValidation", async () => {
     expect(result.current.errors.firstName).toBeDefined()
 })
 
-test("validate through options.yupSchema", async () => {
-    let schema = yup.object().shape({
-        firstName: yup.string().required(),
-        age: yup.number().required(),
-    })
-
-    const { result } = renderHook(() =>
-        useFormist({ firstName: "" }, { yupSchema: schema }),
-    )
-
-    await act(() => result.current.submit())
-
-    expect(getErrors(result).firstName).toBeDefined()
-    expect(getErrors(result).age).toBeDefined()
-    expect(getFieldProps("firstName", result).error).toBeDefined()
-})
-
 test("doesn't submit if invalid", async () => {
     let submitted = false
     const { result } = renderHook(() =>
@@ -53,7 +35,3 @@ test("doesn't submit if invalid", async () => {
 
     expect(submitted).toBe(false)
 })
-
-const getFieldProps = (fieldName, result) =>
-    result.current.getFieldProps(fieldName)
-const getErrors = obj => obj.current.errors
