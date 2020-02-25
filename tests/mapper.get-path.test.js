@@ -24,3 +24,11 @@ test("many levels within arrays", () => {
 
     expect(result).toBe(68)
 })
+
+test("missing many levels", () => {
+    const obj = {}
+
+    const result = getPath("first.second.third", obj)
+
+    expect(result).toBeNull()
+})

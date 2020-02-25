@@ -7,9 +7,10 @@ export const getPath = (path, obj) => {
     const parts = path.split(".")
 
     let current = obj
-    parts.forEach(part => {
+    for (const part of parts) {
+        if (current[part] === undefined) return null
         current = current[part]
-    })
+    }
     return current
 }
 

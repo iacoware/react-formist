@@ -20,6 +20,23 @@ test("validate through options.yupSchema", async () => {
     expect(getFieldProps("firstName", result).error).toBeDefined()
 })
 
+test.skip("nested schema", async () => {
+    let schema = yup.object().shape({
+        fullName: yup.string().required(),
+        address: yup.object().shape({
+            street: yup.string().required(),
+            city: yup.string().required(),
+        }),
+    })
+
+    const { result } = renderHook(() => useFormist(null, { yupSchema: schema }))
+
+    await act(() => result.current.submit())
+
+    const cityProps = getFieldProps("address.city", result)
+    expect(cityProps.error).toBeDefined()
+})
+
 const getFieldProps = (fieldName, result) =>
     result.current.getFieldProps(fieldName)
 const getErrors = obj => obj.current.errors
