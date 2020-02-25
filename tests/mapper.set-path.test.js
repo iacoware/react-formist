@@ -1,5 +1,5 @@
 /*globals test, expect*/
-import { last, isInteger } from "../src/helpers"
+import { last, isInteger, log } from "../src/helpers"
 import { getPath } from "../src/mapper"
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj))
@@ -59,7 +59,7 @@ test("many levels within an array", () => {
     expect(result.first.second.length).toBe(2)
 })
 
-test("last level missing", () => {
+test("missing last object level", () => {
     const obj = { first: { second: {} } }
 
     const result = setPath("first.second.third", 68, obj)
@@ -67,7 +67,7 @@ test("last level missing", () => {
     expect(result.first.second.third).toBe(68)
 })
 
-test("many levels missing", () => {
+test("missing many object levels", () => {
     const obj = {}
 
     const result = setPath("first.second.third", 68, obj)
@@ -75,11 +75,29 @@ test("many levels missing", () => {
     expect(result.first.second.third).toBe(68)
 })
 
-test("array level missing", () => {
+test("missing middle array level", () => {
     const obj = {}
 
     const result = setPath("first.second.1.third", 68, obj)
 
     expect(Array.isArray(result.first.second)).toBe(true)
     expect(result.first.second[1].third).toBe(68)
+})
+
+test("missing last array level", () => {
+    const obj = {}
+
+    const result = setPath("first.second.1", 68, obj)
+
+    expect(Array.isArray(result.first.second)).toBe(true)
+    expect(result.first.second[1]).toBe(68)
+})
+
+test("missing nested array levels", () => {
+    const obj = {}
+
+    const result = setPath("first.1.2.3", 68, obj)
+
+    expect(Array.isArray(result.first)).toBe(true)
+    expect(result.first[1][2][3]).toBe(68)
 })
