@@ -35,4 +35,24 @@ test("change nested values", () => {
     })
 })
 
+test.skip("update nested value", () => {
+    const initialValues = {
+        customer: {
+            name: "Fred George",
+            addresses: [{ city: "New York" }, { city: "Los Angeles" }],
+        },
+    }
+    const { result } = renderHook(() => useFormist(initialValues))
+
+    act(() => {
+        result.current.change("customer.addresses.1.city", "San Francisco")
+    })
+
+    const values = getValues(result)
+    expect(values.customer.addresses).toStrictEqual([
+        { city: "New York" },
+        { city: "San Francisco" },
+    ])
+})
+
 const getValues = obj => obj.current.values

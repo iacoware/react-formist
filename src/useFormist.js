@@ -42,6 +42,7 @@ const useFormist = (initialValues, options) => {
     const change = (name, value) => {
         const curr = unflattenNameValue(name, value)
         return setValues(prev => deepmerge(prev, curr))
+        // return setValues(prev => setPath(name, value, prev))
         // return setValues(prev => ({ ...prev, [name]: value }))
     }
 
