@@ -1,11 +1,19 @@
 /*globals test, expect*/
+import { last } from "../src/helpers"
 import { getPath } from "../src/mapper"
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj))
 
-const setPath = (name, value, obj) => {
+const setPath = (path, value, obj) => {
     const newObj = deepClone(obj)
-    newObj[name] = value
+
+    const parts = path.split(".")
+    const partsMinusLast = parts.slice(0, -1)
+    let current = newObj
+    partsMinusLast.forEach(part => {
+        current = current[part]
+    })
+    current[last(parts)] = value
 
     return newObj
 }
@@ -26,14 +34,15 @@ test("one level", () => {
     expect(result.first).toBe(68)
 })
 
-/*test("many levels", () => {
+test("many levels", () => {
     const obj = { first: { second: { third: 42 } } }
 
-    const result = getPath("first.second.third", obj)
+    const result = setPath("first.second.third", 68, obj)
 
-    expect(result === obj).toBe(false)
+    expect(result.first.second.third).toBe(68)
 })
 
+/*
 test("many levels within arrays", () => {
     const obj = { first: { second: [{ third: 42 }, { third: 68 }] } }
 
