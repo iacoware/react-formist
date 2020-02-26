@@ -4,14 +4,14 @@ import { renderHook, act } from "@testing-library/react-hooks"
 import { log } from "../src/helpers"
 import useFormist from "../src/useFormist"
 
-test("validate through options.yupSchema", async () => {
+test("validate through options.schema", async () => {
     let schema = yup.object().shape({
         firstName: yup.string().required(),
         age: yup.number().required(),
     })
 
     const { result } = renderHook(() =>
-        useFormist({ firstName: "" }, { yupSchema: schema }),
+        useFormist({ firstName: "" }, { schema }),
     )
 
     await act(() => result.current.submit())
@@ -30,7 +30,7 @@ test("nested schema", async () => {
         }),
     })
 
-    const { result } = renderHook(() => useFormist(null, { yupSchema: schema }))
+    const { result } = renderHook(() => useFormist(null, { schema }))
 
     await act(() => result.current.submit())
 

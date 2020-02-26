@@ -20,7 +20,7 @@ test("validate through options.onValidation", async () => {
     expect(result.current.errors.firstName).toBeDefined()
 })
 
-test("doesn't submit if invalid", async () => {
+test("validation fail", async () => {
     let submitted = false
     const { result } = renderHook(() =>
         useFormist(null, {
@@ -34,4 +34,17 @@ test("doesn't submit if invalid", async () => {
     await act(() => result.current.submit())
 
     expect(submitted).toBe(false)
+})
+
+test("previous errors, validation success", async () => {
+    const { result } = renderHook(() =>
+        useFormist(null, { onValidate: () => {} }),
+    )
+
+    await act(() => {
+        result.current.setError("firstName", "Try again!")
+        return result.current.submit()
+    })
+
+    expect(result.current.errors).toStrictEqual({})
 })

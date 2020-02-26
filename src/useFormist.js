@@ -33,14 +33,18 @@ const useFormist = (initialValues, options) => {
     const submit = async () => {
         const errs = await validate()
         if (hasErrors(errs)) return
-
+        clearErrors()
         await optionsOnSubmit(values)
         return values
     }
 
-    const change = (name, value) => {
-        return setValues(prev => setPath(name, value, prev))
-    }
+    const change = (name, value) =>
+        setValues(prev => setPath(name, value, prev))
+
+    const setError = (path, message) =>
+        setErrors(prev => ({ ...prev, ...{ path: message } }))
+
+    const clearErrors = () => setErrors({})
 
     const field = name => ({
         name: name,
@@ -71,8 +75,9 @@ const useFormist = (initialValues, options) => {
         submitButton,
         values,
         errors,
-        submit,
         change,
+        submit,
+        setError,
         getFieldProps: field, //formal alias
         getFormProps: form, // formal alias
         getSubmitButtonProps: submitButton, // formal alias
@@ -87,9 +92,9 @@ async function invokeOptionalValidation(options, values) {
 }
 
 async function invokeYupValidation(options, values) {
-    if (options.yupSchema) {
+    if (options.schema) {
         try {
-            await options.yupSchema.validate(values, {
+            await options.schema.validate(values, {
                 abortEarly: false,
             })
         } catch (yupError) {
