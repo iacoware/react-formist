@@ -59,7 +59,7 @@ function AddressForm({ onSubmit }) {
             </div>
             <div>
                 <input type="text" {...formist.field("lastName")} />
-                <span className="validation-error">{formist.errors.lastName}</span
+                <span className="validation-error">{formist.errors.lastName}</span>
             </div>
             <button {...formist.submitButton()}>Submit</button>
         </form>
