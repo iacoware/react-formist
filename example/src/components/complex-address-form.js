@@ -21,6 +21,8 @@ export default function ComplexAddressForm({ onSubmit }) {
     }
     const formist = useFormist(initialValues, { schema: movieSchema, onSubmit })
 
+    console.log(formist.errors)
+
     return (
         <form {...formist.form()}>
             <div>
@@ -39,14 +41,14 @@ export default function ComplexAddressForm({ onSubmit }) {
                                 {...formist.field(`releases.${index}.location`)}
                             />
                             <span className="validation-error">
-                                {/* {formist.errors.releases[index].location} */}
+                                {formist.error(`releases.${index}.location`)}
                             </span>
                             <input
                                 type="text"
                                 {...formist.field(`releases.${index}.date`)}
                             />
                             <span className="validation-error">
-                                {/* {formist.errors.releases[index].date} */}
+                                {formist.error(`releases.${index}.date`)}
                             </span>
                         </div>
                     )

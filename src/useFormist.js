@@ -12,20 +12,20 @@ const useFormist = (initialValues, options) => {
     const [errors, setErrors] = useState({})
 
     const getValue = name => getPath(name, values) || ""
-    const getError = name => errors[name] || ""
+    const getError = name => getPath(name, errors) || ""
     const optionsOnSubmit = safeFn(options.onSubmit)
 
     const validate = async () => {
         //Maybe would be a better fit?
         const errs1 = await invokeOptionalValidation(options, values)
         if (errs1) {
-            setErrors(errs1)
+            applyErrors(errs1)
             return errs1
         }
 
         const errs2 = await invokeYupValidation(options, values)
         if (errs2) {
-            setErrors(errs2)
+            applyErrors(errs2)
             return errs2
         }
     }
@@ -38,11 +38,15 @@ const useFormist = (initialValues, options) => {
         return values
     }
 
-    const change = (name, value) =>
-        setValues(prev => setPath(name, value, prev))
+    const change = (path, value) =>
+        setValues(prev => setPath(path, value, prev))
 
     const setError = (path, message) =>
-        setErrors(prev => ({ ...prev, ...{ path: message } }))
+        setErrors(prev => setPath(path, message, prev))
+
+    const applyErrors = errors => {
+        Object.keys(errors).forEach(path => setError(path, errors[path]))
+    }
 
     const clearErrors = () => setErrors({})
 
@@ -77,6 +81,7 @@ const useFormist = (initialValues, options) => {
         errors,
         change,
         submit,
+        error: getError,
         setError,
         getFieldProps: field, //formal alias
         getFormProps: form, // formal alias
