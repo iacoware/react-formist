@@ -18,13 +18,13 @@
         "example": "parcel ./example/index.html --no-autoinstall --open"
     },
     "peerDependencies": {
-        "react": "^16.12.0"
+        "react": "^16.8.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.8.4",
-        "@babel/preset-env": "^7.8.4",
+        "@babel/core": "^7.8.6",
+        "@babel/preset-env": "^7.8.6",
         "@babel/preset-react": "^7.8.3",
-        "@testing-library/react": "^9.4.0",
+        "@testing-library/react": "^9.4.1",
         "@testing-library/react-hooks": "^3.2.1",
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.10.0",
@@ -33,9 +33,9 @@
         "jest": "^25.1.0",
         "parcel": "^1.12.4",
         "prettier": "^1.19.1",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0",
-        "react-test-renderer": "^16.12.0",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "react-test-renderer": "^16.13.0",
         "yup": "^0.28.1"
     },
     "browserslist": [
