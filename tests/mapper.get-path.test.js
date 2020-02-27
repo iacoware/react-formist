@@ -25,6 +25,14 @@ test("many levels within arrays", () => {
     expect(result).toBe(68)
 })
 
+test("missing nested array levels", () => {
+    const obj = { first: [0, [10, 11, [100, 110, 120, 68]]] }
+
+    const result = getPath("first.1.2.3", obj)
+
+    expect(result).toBe(68)
+})
+
 test("missing many levels", () => {
     const obj = {}
 

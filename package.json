@@ -40,8 +40,5 @@
     },
     "browserslist": [
         "last 2 Chrome versions"
-    ],
-    "dependencies": {
-        "deepmerge": "^4.2.2"
-    }
+    ]
 }

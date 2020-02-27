@@ -20,6 +20,7 @@ Run the example
     -   `customer.address.1.city` and `customer.address.1.street`
 -   Optional integration with [Yup](https://github.com/jquense/yup)
 -   Good tests suite
+-   Zero dependencies
 
 ## Usage
 
