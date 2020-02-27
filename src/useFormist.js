@@ -45,6 +45,7 @@ const useFormist = (initialValues, options) => {
         setErrors(prev => setPath(path, message, prev))
 
     const applyErrors = errors => {
+        clearErrors()
         Object.keys(errors).forEach(path => setError(path, errors[path]))
     }
 

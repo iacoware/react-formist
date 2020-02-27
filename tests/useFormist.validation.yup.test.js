@@ -21,6 +21,32 @@ test("validate through options.schema", async () => {
     expect(getFieldProps("firstName", result).error).toBeDefined()
 })
 
+test("change fields in error", async () => {
+    let schema = yup.object().shape({
+        firstName: yup.string().required(),
+        lastName: yup.string().required(),
+    })
+
+    const { result } = renderHook(() => useFormist({}, { schema }))
+
+    await act(async () => {
+        await result.current.change("firstName", "John")
+        await result.current.submit()
+    })
+
+    expect(getErrors(result).firstName).not.toBeDefined()
+    expect(getErrors(result).lastName).toBeDefined()
+
+    await act(async () => {
+        await result.current.change("firstName", "")
+        await result.current.change("lastName", "Travolta")
+        await result.current.submit()
+    })
+
+    expect(getErrors(result).firstName).toBeDefined()
+    expect(getErrors(result).lastName).not.toBeDefined()
+})
+
 test("nested schema", async () => {
     let schema = yup.object().shape({
         fullName: yup.string().required(),
