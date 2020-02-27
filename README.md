@@ -10,14 +10,16 @@ Run the example
 
 ## Features
 
--   headless form state management (bring your own UI)
--   support nested object path like `address.city`
--   support arrays path like...
+-   Headless form state management (bring your own UI)
+-   Support nested object path like `address.city`
+-   Support arrays path like...
     -   `customer.address.0`
     -   `customer.address.1`
 -   ... and even more nested like
     -   `customer.address.0.city` and `customer.address.0.street`
     -   `customer.address.1.city` and `customer.address.1.street`
+-   Optional integration with [Yup](https://github.com/jquense/yup)
+-   Good tests suite
 
 ## Usage
 
@@ -41,7 +43,7 @@ function AddressForm({ onSubmit }) {
     )
 ```
 
-#### Form with Yup validation
+#### Form with [Yup](https://github.com/jquense/yup) validation
 
 ```js
 function AddressForm({ onSubmit }) {
