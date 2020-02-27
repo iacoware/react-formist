@@ -21,7 +21,7 @@ test("validate through options.schema", async () => {
     expect(getFieldProps("firstName", result).error).toBeDefined()
 })
 
-test.skip("nested schema", async () => {
+test("nested schema", async () => {
     let schema = yup.object().shape({
         fullName: yup.string().required(),
         address: yup.array().of(
@@ -39,12 +39,12 @@ test.skip("nested schema", async () => {
 
     await act(() => result.current.submit())
 
-    console.log(result.current.errors)
-
-    const cityProps = getFieldProps("address.city", result)
-    expect(cityProps.error).not.toBe("")
-    expect(result.current.error("address.city")).not.toBe("")
-    expect(result.current.errors.address.city).not.toBe("")
+    expect(result.current.field("address.0.city").error).not.toBe("")
+    expect(result.current.error("address.0.city")).not.toBe("")
+    expect(result.current.errors.address[0].city).not.toBe("")
+    expect(result.current.field("address.1.street").error).not.toBe("")
+    expect(result.current.error("address.1.street")).not.toBe("")
+    expect(result.current.errors.address[1].street).not.toBe("")
 })
 
 const getFieldProps = (fieldName, result) =>

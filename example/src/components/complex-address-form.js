@@ -28,7 +28,7 @@ export default function ComplexAddressForm({ onSubmit }) {
             <div>
                 <input type="text" {...formist.field("name")} />
                 <span className="validation-error">
-                    {formist.errors.firstName}
+                    {formist.error("name")}
                 </span>
             </div>
 
