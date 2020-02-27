@@ -21,8 +21,6 @@ export default function ComplexAddressForm({ onSubmit }) {
     }
     const formist = useFormist(initialValues, { schema: movieSchema, onSubmit })
 
-    console.log(formist.errors)
-
     return (
         <form {...formist.form()}>
             <div>
