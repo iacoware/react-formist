@@ -40,5 +40,13 @@
     },
     "browserslist": [
         "last 2 Chrome versions"
+    ],
+    "keywords": [
+        "react",
+        "form",
+        "forms",
+        "hooks",
+        "validation",
+        "form-validation"
     ]
 }
