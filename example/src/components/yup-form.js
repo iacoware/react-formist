@@ -2,7 +2,7 @@ import React from "react"
 import * as yup from "yup"
 import useFormist from "../../../src/useFormist"
 
-export default function YupAddressForm({ onSubmit }) {
+export default function YupForm({ onSubmit }) {
     const schema = yup.object().shape({
         firstName: yup.string().required(),
         lastName: yup.string().required(),

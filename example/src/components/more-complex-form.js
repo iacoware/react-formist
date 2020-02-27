@@ -11,7 +11,7 @@ const movieSchema = yup.object().shape({
     releases: yup.array().of(releaseSchema),
 })
 
-export default function ComplexAddressForm({ onSubmit }) {
+export default function MoreComplexForm({ onSubmit }) {
     const initialValues = {
         name: "Avengers: EndGame",
         releases: [

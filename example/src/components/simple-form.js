@@ -1,7 +1,7 @@
 import React from "react"
 import useFormist from "../../../src/useFormist"
 
-export default function SimpleAddressForm({ onSubmit }) {
+export default function SimpleForm({ onSubmit }) {
     const initialValues = { firstName: "Kent", lastName: "Beck" }
     const formist = useFormist(initialValues, { onSubmit })
 
