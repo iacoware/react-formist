@@ -5,8 +5,10 @@
     "author": "Massimo Iacolare",
     "license": "MIT",
     "main": "dist/useFormist.js",
+    "module": "dist/useFormist.es.js",
     "files": [
         "dist/useFormist.js",
+        "dist/useFormist.es.js",
         "dist/useFormist.js.map"
     ],
     "repository": {
@@ -15,7 +17,8 @@
     "scripts": {
         "clean": "rm -rf dist",
         "test": "jest",
-        "build": "npm run clean && eslint src && jest && parcel build src/useFormist.js",
+        "build": "npm run clean && eslint src && jest && rollup -c rollup.config.js",
+        "build2": "npm run clean && eslint src && jest && parcel build src/useFormist.js",
         "example": "parcel ./example/index.html --no-autoinstall --open"
     },
     "peerDependencies": {
@@ -23,9 +26,9 @@
     },
     "devDependencies": {
         "@babel/core": "^7.8.6",
+        "@babel/plugin-transform-runtime": "^7.8.3",
         "@babel/preset-env": "^7.8.6",
         "@babel/preset-react": "^7.8.3",
-        "@babel/plugin-transform-runtime": "^7.8.3",
         "@testing-library/react": "^9.4.1",
         "@testing-library/react-hooks": "^3.2.1",
         "eslint": "^6.8.0",
@@ -38,6 +41,7 @@
         "react": "^16.13.0",
         "react-dom": "^16.13.0",
         "react-test-renderer": "^16.13.0",
+        "rollup": "^1.31.1",
         "yup": "^0.28.1"
     },
     "browserslist": [
