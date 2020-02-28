@@ -19,7 +19,8 @@
         "test": "jest",
         "build": "npm run clean && eslint src && jest && rollup -c rollup.config.js",
         "build2": "npm run clean && eslint src && jest && parcel build src/useFormist.js",
-        "example": "parcel ./example/index.html --no-autoinstall --open"
+        "example": "parcel ./example/index.html --no-autoinstall --open",
+        "publish": "git push --tags && npm publish"
     },
     "peerDependencies": {
         "react": "^16.8.0"

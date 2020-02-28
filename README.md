@@ -1,5 +1,7 @@
 # Formist - minimal react hook form handler
 
+![min](https://badgen.net/npm/license/react-formist) ![min](https://badgen.net/bundlephobia/min/react-formist) ![minzip](https://badgen.net/bundlephobia/minzip/react-formist)
+
 Install
 
 `npm install react-formist`
