@@ -19,7 +19,7 @@
         "test": "jest",
         "build": "npm run clean && eslint src && jest && rollup -c rollup.config.js",
         "publish": "git push --tags && npm publish",
-        "example": "(cd example && npm start)"
+        "example": "(cd example && npm install); (cd example && npm start)"
     },
     "peerDependencies": {
         "react": "^16.8.0"
