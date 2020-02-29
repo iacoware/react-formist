@@ -13,8 +13,6 @@
         "start": "npm run clean && eslint src && parcel ./index.html --no-autoinstall --open"
     },
     "dependencies": {
-        "react": "^16.13.0",
-        "react-dom": "^16.13.0",
         "react-formist": "^0.2.1",
         "yup": "^0.28.1"
     },
@@ -28,6 +26,10 @@
         "eslint-plugin-react": "^7.18.3",
         "parcel": "^1.12.4",
         "prettier": "^1.19.1"
+    },
+    "alias": {
+        "react": "../node_modules/react",
+        "react-dom": "../node_modules/react-dom"
     },
     "browserslist": [
         "defaults and >0.2%"
