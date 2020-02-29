@@ -1,6 +1,6 @@
 {
     "name": "react-formist",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "react hook to handle forms",
     "author": "Massimo Iacolare",
     "license": "MIT",
