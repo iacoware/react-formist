@@ -10,9 +10,9 @@
     },
     "scripts": {
         "clean": "rm -rf dist .cache",
-        "start": "eslint src && parcel ./index.html --no-autoinstall --open"
+        "start": "npm run clean && eslint src && parcel ./index.html --no-autoinstall --open"
     },
-    "peerDependencies": {
+    "dependencies": {
         "react": "^16.13.0",
         "react-dom": "^16.13.0",
         "react-formist": "^0.2.1",
@@ -20,7 +20,6 @@
     },
     "devDependencies": {
         "@babel/core": "^7.8.6",
-        "@babel/plugin-transform-runtime": "^7.8.3",
         "@babel/preset-env": "^7.8.6",
         "@babel/preset-react": "^7.8.3",
         "eslint": "^6.8.0",
