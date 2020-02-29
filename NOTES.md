@@ -8,3 +8,8 @@ npm run build
 npm version patch|minor|major
 npm run publish
 ```
+
+## Local development
+
+cd into `react-formist` and then `npm link`
+cd into `react-formist/example` and then `npm link react-formist`

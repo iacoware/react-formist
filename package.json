@@ -15,11 +15,11 @@
         "url": "https://github.com/iacoware/react-formist"
     },
     "scripts": {
-        "clean": "rm -rf dist",
+        "clean": "rm -rf dist .cache",
         "test": "jest",
         "build": "npm run clean && eslint src && jest && rollup -c rollup.config.js",
-        "example": "parcel ./example/index.html --no-autoinstall --open",
-        "publish": "git push --tags && npm publish"
+        "publish": "git push --tags && npm publish",
+        "example": "(cd example && npm start)"
     },
     "peerDependencies": {
         "react": "^16.8.0"
