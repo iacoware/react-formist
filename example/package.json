@@ -1,0 +1,36 @@
+{
+    "name": "react-formist",
+    "version": "0.2.1",
+    "description": "react hook to handle forms",
+    "author": "Massimo Iacolare",
+    "license": "MIT",
+    "main": "src/index.js",
+    "repository": {
+        "url": "https://github.com/iacoware/react-formist"
+    },
+    "scripts": {
+        "clean": "rm -rf dist .cache",
+        "start": "eslint src && parcel ./index.html --no-autoinstall --open"
+    },
+    "peerDependencies": {
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "react-formist": "^0.2.1",
+        "yup": "^0.28.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.6",
+        "@babel/plugin-transform-runtime": "^7.8.3",
+        "@babel/preset-env": "^7.8.6",
+        "@babel/preset-react": "^7.8.3",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.10.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-react": "^7.18.3",
+        "parcel": "^1.12.4",
+        "prettier": "^1.19.1"
+    },
+    "browserslist": [
+        "defaults and >0.2%"
+    ]
+}
