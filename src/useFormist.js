@@ -16,6 +16,8 @@ const useFormist = (initialValues, options) => {
     const optionsOnSubmit = safeFn(options.onSubmit)
 
     const validate = async () => {
+        if (hasErrors(errors)) clearErrors()
+
         //Maybe would be a better fit?
         const errs1 = await invokeOptionalValidation(options, values)
         if (errs1) {
@@ -33,7 +35,6 @@ const useFormist = (initialValues, options) => {
     const submit = async () => {
         const errs = await validate()
         if (hasErrors(errs)) return
-        clearErrors()
         await optionsOnSubmit(values)
         return values
     }
@@ -45,11 +46,12 @@ const useFormist = (initialValues, options) => {
         setErrors(prev => setPath(path, message, prev))
 
     const applyErrors = errors => {
-        clearErrors()
         Object.keys(errors).forEach(path => setError(path, errors[path]))
     }
 
-    const clearErrors = () => setErrors({})
+    const clearErrors = () => {
+        setErrors({})
+    }
 
     const field = name => ({
         name: name,

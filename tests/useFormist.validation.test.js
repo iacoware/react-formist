@@ -41,8 +41,8 @@ test("previous errors, validation success", async () => {
         useFormist(null, { onValidate: () => {} }),
     )
 
-    await act(() => {
-        result.current.setError("firstName", "Try again!")
+    await act(async () => {
+        await result.current.setError("firstName", "Try again!")
         return result.current.submit()
     })
 
