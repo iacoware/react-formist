@@ -71,7 +71,7 @@ function YupForm({ onSubmit }) {
     )
 ```
 
-#### More Complex form
+#### More complex form
 
 ```js
 function MoreComplexForm({ onSubmit }) {
