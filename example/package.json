@@ -32,6 +32,6 @@
         "react-dom": "../node_modules/react-dom"
     },
     "browserslist": [
-        "defaults and >0.2%"
+        "last 2 chrome versions"
     ]
 }
