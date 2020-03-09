@@ -31,7 +31,7 @@ test("change fields in error", async () => {
 
     await act(async () => {
         await result.current.change("firstName", "John")
-        await result.current.submit()
+        await result.current.validate()
     })
 
     expect(getErrors(result).firstName).not.toBeDefined()
@@ -40,7 +40,7 @@ test("change fields in error", async () => {
     await act(async () => {
         await result.current.change("firstName", "")
         await result.current.change("lastName", "Travolta")
-        await result.current.submit()
+        await result.current.validate()
     })
 
     expect(getErrors(result).firstName).toBeDefined()
@@ -63,7 +63,7 @@ test("nested schema", async () => {
 
     const { result } = renderHook(() => useFormist(initialValues, { schema }))
 
-    await act(() => result.current.submit())
+    await act(() => result.current.validate())
 
     expect(result.current.field("address.0.city").error).not.toBe("")
     expect(result.current.error("address.0.city")).not.toBe("")
@@ -82,7 +82,7 @@ test("non yup errors", async () => {
     const { result } = renderHook(() => useFormist({}, { schema }))
 
     try {
-        await result.current.submit()
+        await result.current.validate()
     } catch (err) {
         expect(err).toBeTruthy()
     }

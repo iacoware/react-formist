@@ -84,6 +84,7 @@ const useFormist = (initialValues, options) => {
         errors,
         change,
         submit,
+        validate,
         error: getError,
         setError,
         getFieldProps: field, //formal alias
