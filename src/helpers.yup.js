@@ -1,8 +1,12 @@
 const adaptPath = path => path.replace("[", ".").replace("]", "")
 const adaptMessage = msg => msg.replace(/\[\d+\]/g, "")
 
+export const isYupError = error => {
+    return typeof error === "object" && !!error.inner
+}
+
 export function extractYupErrors(yupError) {
-    if (typeof yupError !== "object" || !yupError.inner) return {}
+    if (!isYupError(yupError)) return {}
 
     const errors = {}
     for (const err of yupError.inner) {

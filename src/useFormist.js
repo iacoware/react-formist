@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { safeFn, isObject, isEmpty } from "./helpers"
-import { extractYupErrors } from "./helpers.yup"
+import { extractYupErrors, isYupError } from "./helpers.yup"
 import { getPath, setPath } from "./mapper"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
@@ -103,8 +103,9 @@ async function invokeYupValidation(options, values) {
 
     try {
         await options.schema.validate(values, { abortEarly: false })
-    } catch (yupError) {
-        return extractYupErrors(yupError)
+    } catch (err) {
+        if (!isYupError(err)) throw err
+        return extractYupErrors(err)
     }
 }
 

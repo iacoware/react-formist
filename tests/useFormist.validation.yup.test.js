@@ -73,6 +73,21 @@ test("nested schema", async () => {
     expect(result.current.errors.address[1].street).not.toBe("")
 })
 
+test("non yup errors", async () => {
+    expect.assertions(1)
+    //there's a typo below, required is a function and should be invoked as required()
+    let schema = yup.object().shape({
+        firstName: yup.string().required,
+    })
+    const { result } = renderHook(() => useFormist({}, { schema }))
+
+    try {
+        await result.current.submit()
+    } catch (err) {
+        expect(err).toBeTruthy()
+    }
+})
+
 const getFieldProps = (fieldName, result) =>
     result.current.getFieldProps(fieldName)
 const getErrors = obj => obj.current.errors
