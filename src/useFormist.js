@@ -93,22 +93,18 @@ const useFormist = (initialValues, options) => {
 }
 
 async function invokeOptionalValidation(options, values) {
-    if (options.onValidate) {
-        const errs = await options.onValidate(values)
-        return errs
-    }
+    if (!options.onValidate) return
+
+    return await options.onValidate(values)
 }
 
 async function invokeYupValidation(options, values) {
-    if (options.schema) {
-        try {
-            await options.schema.validate(values, {
-                abortEarly: false,
-            })
-        } catch (yupError) {
-            const errs = extractYupErrors(yupError)
-            return errs
-        }
+    if (!options.schema) return
+
+    try {
+        await options.schema.validate(values, { abortEarly: false })
+    } catch (yupError) {
+        return extractYupErrors(yupError)
     }
 }
 
