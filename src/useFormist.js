@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { safeFn, isObject, isEmpty } from "./helpers"
-import { invokeStandardValidation, invokeYupValidation } from "./validation"
 import { getPath, setPath } from "./mapper"
+import useValidation from "./useValidation"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 
@@ -9,27 +9,13 @@ const useFormist = (initialValues, options) => {
     initialValues = initialValues || {}
     options = options || {}
     const [values, setValues] = useState(initialValues)
-    const [errors, setErrors] = useState({})
+    const { errors, getError, setError, validate } = useValidation(
+        values,
+        options,
+    )
 
     const getValue = name => getPath(name, values) || ""
-    const getError = name => getPath(name, errors) || ""
     const optionsOnSubmit = safeFn(options.onSubmit)
-
-    const validate = async () => {
-        if (hasErrors(errors)) clearErrors()
-
-        const errs1 = await invokeStandardValidation(options, values)
-        if (errs1) {
-            applyErrors(errs1)
-            return errs1
-        }
-
-        const errs2 = await invokeYupValidation(options, values)
-        if (errs2) {
-            applyErrors(errs2)
-            return errs2
-        }
-    }
 
     const submit = async () => {
         const errs = await validate()
@@ -40,17 +26,6 @@ const useFormist = (initialValues, options) => {
 
     const change = (path, value) =>
         setValues(prev => setPath(path, value, prev))
-
-    const setError = (path, message) =>
-        setErrors(prev => setPath(path, message, prev))
-
-    const applyErrors = errors => {
-        Object.keys(errors).forEach(path => setError(path, errors[path]))
-    }
-
-    const clearErrors = () => {
-        setErrors({})
-    }
 
     const field = name => ({
         name: name,
