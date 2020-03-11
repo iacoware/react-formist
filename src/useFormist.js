@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { safeFn, isObject, isEmpty } from "./helpers"
-import { extractYupErrors, isYupError } from "./helpers.yup"
+import { invokeStandardValidation, invokeYupValidation } from "./validation"
 import { getPath, setPath } from "./mapper"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
@@ -18,8 +18,7 @@ const useFormist = (initialValues, options) => {
     const validate = async () => {
         if (hasErrors(errors)) clearErrors()
 
-        //Maybe would be a better fit?
-        const errs1 = await invokeOptionalValidation(options, values)
+        const errs1 = await invokeStandardValidation(options, values)
         if (errs1) {
             applyErrors(errs1)
             return errs1
@@ -90,23 +89,6 @@ const useFormist = (initialValues, options) => {
         getFieldProps: field, //formal alias
         getFormProps: form, // formal alias
         getSubmitButtonProps: submitButton, // formal alias
-    }
-}
-
-async function invokeOptionalValidation(options, values) {
-    if (!options.onValidate) return
-
-    return await options.onValidate(values)
-}
-
-async function invokeYupValidation(options, values) {
-    if (!options.schema) return
-
-    try {
-        await options.schema.validate(values, { abortEarly: false })
-    } catch (err) {
-        if (!isYupError(err)) throw err
-        return extractYupErrors(err)
     }
 }
 
