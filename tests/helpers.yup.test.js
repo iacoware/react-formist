@@ -46,3 +46,28 @@ test("extract yup errors on arrays", () => {
         "address.1.street": "address.street is a required field",
     })
 })
+
+test("extract yup errors on nested arrays", () => {
+    let schema = yup.object().shape({
+        address: yup.array().of(
+            yup.object().shape({
+                street: yup.array().of(yup.string().required()),
+                city: yup.string().required(),
+            }),
+        ),
+    })
+
+    let result = {}
+    const values = {
+        address: [{ street: ["5th", "avenue", ""] }],
+    }
+    try {
+        schema.validateSync(values, { abortEarly: false })
+    } catch (errors) {
+        result = extractYupErrors(errors)
+    }
+    expect(result).toStrictEqual({
+        "address.0.city": "address.city is a required field",
+        "address.0.street.2": "address.street is a required field",
+    })
+})
