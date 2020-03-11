@@ -1,5 +1,10 @@
-const adaptPath = path => path.replace(/\[/g, ".").replace(/\]/g, "")
-const adaptMessage = msg => msg.replace(/\[\d+\]/g, "")
+const openBracketRegEx = /\[/g
+const closeBracketRegEx = /\]/g
+const arrayIndexRegEx = /\[\d+\]/g
+
+const adaptPath = path =>
+    path.replace(openBracketRegEx, ".").replace(closeBracketRegEx, "")
+const adaptMessage = msg => msg.replace(arrayIndexRegEx, "")
 
 export const isYupError = error => {
     return typeof error === "object" && !!error.inner
