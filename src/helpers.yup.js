@@ -1,4 +1,4 @@
-const adaptPath = path => path.replace("[", ".").replace("]", "")
+const adaptPath = path => path.replace(/\[/g, ".").replace(/\]/g, "")
 const adaptMessage = msg => msg.replace(/\[\d+\]/g, "")
 
 export const isYupError = error => {
