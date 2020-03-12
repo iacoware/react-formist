@@ -1,6 +1,5 @@
-import { useState } from "react"
 import { safeFn, isObject, isEmpty } from "./helpers"
-import { getPath, setPath } from "./mapper"
+import useChanges from "./useChanges"
 import useValidation from "./useValidation"
 
 const hasErrors = errs => isObject(errs) && !isEmpty(errs)
@@ -8,31 +7,24 @@ const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 const useFormist = (initialValues, options) => {
     initialValues = initialValues || {}
     options = options || {}
-    const [values, setValues] = useState(initialValues)
-    const { errors, getError, setError, validate } = useValidation(
-        values,
-        options,
-    )
-
-    const getValue = name => getPath(name, values) || ""
     const optionsOnSubmit = safeFn(options.onSubmit)
 
-    const submit = async () => {
-        const errs = await validate()
-        if (hasErrors(errs)) return
-        await optionsOnSubmit(values)
-        return values
-    }
+    const changes = useChanges(initialValues)
+    const validation = useValidation(changes.values, options)
 
-    const change = (path, value) =>
-        setValues(prev => setPath(path, value, prev))
+    const submit = async () => {
+        const errs = await validation.validate()
+        if (hasErrors(errs)) return
+        await optionsOnSubmit(changes.values)
+        return changes.values
+    }
 
     const field = name => ({
         name: name,
-        value: getValue(name),
-        error: getError(name),
+        value: changes.getValue(name),
+        error: validation.getError(name),
         onChange(e) {
-            change(name, e.target.value)
+            changes.change(name, e.target.value)
         },
     })
 
@@ -51,16 +43,16 @@ const useFormist = (initialValues, options) => {
     })
 
     return {
+        values: changes.values,
+        change: changes.change,
+        errors: validation.errors,
+        error: validation.getError,
+        setError: validation.setError,
+        validate: validation.validate,
         field,
         form,
         submitButton,
-        values,
-        errors,
-        change,
         submit,
-        validate,
-        error: getError,
-        setError,
         getFieldProps: field, //formal alias
         getFormProps: form, // formal alias
         getSubmitButtonProps: submitButton, // formal alias
