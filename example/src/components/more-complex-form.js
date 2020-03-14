@@ -12,14 +12,10 @@ const movieSchema = yup.object().shape({
 })
 
 export default function MoreComplexForm({ onSubmit }) {
-    const initialValues = {
-        name: "Avengers: EndGame",
-        releases: [
-            { location: "Los Angeles", date: "2019-04-22" },
-            { location: "New York", date: "2019-04-26" },
-        ],
+    const data = {
+        releases: [{ id: 1 }, { id: 2 }, { id: 3 }],
     }
-    const formist = useFormist(initialValues, { schema: movieSchema, onSubmit })
+    const formist = useFormist({}, { schema: movieSchema, onSubmit })
 
     return (
         <form {...formist.form()}>
@@ -31,9 +27,10 @@ export default function MoreComplexForm({ onSubmit }) {
             </div>
 
             <div>
-                {formist.values.releases.map((release, index) => {
+                {data.releases.map((release, index) => {
                     return (
-                        <div key={index}>
+                        <div key={release.id}>
+                            <span>{release.id} - </span>
                             <input
                                 type="text"
                                 {...formist.field(`releases.${index}.location`)}

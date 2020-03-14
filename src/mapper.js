@@ -1,12 +1,12 @@
 //prettier-ignore
-import { isInteger, last, deepClone } from "./helpers"
+import { isInteger, isNull, last, deepClone } from "./helpers"
 
 export const getPath = (path, obj) => {
     const parts = path.split(".")
 
     let current = obj
     for (const part of parts) {
-        if (current[part] === undefined) return null
+        if (isNull(current) || isNull(current[part])) return null
         current = current[part]
     }
     return current
@@ -22,7 +22,7 @@ export const setPath = (path, value, obj) => {
         const nextPart = parts[index + 1]
         const mustBeAnArray = isInteger(nextPart)
 
-        if (!current[part]) {
+        if (isNull(current[part])) {
             if (mustBeAnArray) current[part] = []
             else current[part] = {}
         }

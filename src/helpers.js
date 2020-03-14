@@ -5,6 +5,7 @@ export const isInteger = text => !isNaN(parseInt(text, 10))
 export const isObject = obj =>
     obj !== null && obj !== undefined && obj.constructor === Object
 
+export const isNull = obj => obj === null || obj === undefined
 export const isEmpty = obj => isObject(obj) && Object.entries(obj).length === 0
 
 export const head = arr => arr[0]

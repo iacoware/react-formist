@@ -17,6 +17,12 @@ test("many levels", () => {
     expect(result).toBe(42)
 })
 
+test("many levels, null obj", () => {
+    const result = getPath("first.second.third", null)
+
+    expect(result).toBeNull()
+})
+
 test("many levels within arrays", () => {
     const obj = { first: { second: [{ third: 42 }, { third: 68 }] } }
 
