@@ -1,6 +1,6 @@
 /*globals test, expect, jest*/
 import React from "react"
-import { render, fireEvent, waitForElement, wait } from "@testing-library/react"
+import { render, fireEvent, wait } from "@testing-library/react"
 import useFormist from "../src/useFormist"
 
 const AddressForm = ({ values, onSubmit }) => {
@@ -64,7 +64,7 @@ test("click submit button", async () => {
 
     await wait()
 
-    expect(onSubmit.mock.calls.length).toBe(1)
+    expect(onSubmit).toHaveBeenCalled()
 })
 
 const event = value => ({ preventDefault() {}, target: { value: value } })
