@@ -54,46 +54,35 @@ function YupForm({ onSubmit }) {
 #### More Complex form
 
 ```js
+function TextField({ value, onChange, error }) {
+    return (
+        <>
+            <input type="text" value={value} onChange={onChange} />
+            <span className="validation-error">{error}</span>
+        </>
+    )
+}
+
 function MoreComplexForm({ onSubmit }) {
-    const initialValues = {
-        name: "Avengers: EndGame",
-        releases: [
-            { location: "Los Angeles", date: "2019-04-22" },
-            { location: "New York", date: "2019-04-26" },
-        ],
+    const data = {
+        releases: [{ id: 1 }, { id: 2 }, { id: 3 }],
     }
-    const formist = useFormist(initialValues, { schema: movieSchema, onSubmit })
+    const formist = useFormist({}, { schema: movieSchema, onSubmit })
 
     return (
         <form {...formist.form()}>
             <div>
-                <input type="text" {...formist.field("name")} />
-                <span className="validation-error">
-                    {formist.error("name")}
-                </span>
+                <TextField {...formist.field("name")} />
             </div>
 
             <div>
-                {formist.values.releases.map((release, index) => {
-                    return (
-                        <div key={index}>
-                            <input
-                                type="text"
-                                {...formist.field(`releases.${index}.location`)}
-                            />
-                            <span className="validation-error">
-                                {formist.error(`releases.${index}.location`)}
-                            </span>
-                            <input
-                                type="text"
-                                {...formist.field(`releases.${index}.date`)}
-                            />
-                            <span className="validation-error">
-                                {formist.error(`releases.${index}.date`)}
-                            </span>
-                        </div>
-                    )
-                })}
+                {data.releases.map((release, index) => (
+                    <div key={release.id}>
+                        <span>{release.id} - </span>
+                        <TextField {...formist.field(`releases.${index}.location`)} />
+                        <TextField {...formist.field(`releases.${index}.date`)} />
+                    </div>
+                ))}
             </div>
             <button {...formist.submitButton()}>Submit</button>
         </form>
