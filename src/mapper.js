@@ -19,7 +19,7 @@ export const setPath = (path, value, obj) => {
     const partsMinusLast = parts.slice(0, -1)
     let current = newObj
     partsMinusLast.forEach((part, index) => {
-        checkType(current, part)
+        checkType(current, part, newObj)
 
         const nextPart = parts[index + 1]
         const mustBeAnArray = isInteger(nextPart)
@@ -31,19 +31,20 @@ export const setPath = (path, value, obj) => {
         current = current[part]
     })
 
-    checkType(current, last(parts))
+    checkType(current, last(parts), newObj)
     current[last(parts)] = value
 
     return newObj
 }
 
-const checkType = (objOrArray, part) => {
+const checkType = (objOrArray, part, wholeTarget) => {
     const error =
         (Array.isArray(objOrArray) && !isInteger(part)) ||
         (isObject(objOrArray) && isInteger(part))
 
-    if (error)
-        throw new Error(
-            `Type mismatch between target type '${typeof objOrArray}' and property '${part}'`,
-        )
+    if (error) {
+        const targetString = JSON.stringify(wholeTarget, null, 2)
+        const msg = `Type mismatch between target type and property\nProperty: '${part}'\nTarget: ${targetString}`
+        throw new Error(msg)
+    }
 }
