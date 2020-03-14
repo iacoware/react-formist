@@ -1,6 +1,6 @@
 # Formist - minimal react hook form handler
 
-![min](https://badgen.net/npm/license/react-formist) ![min](https://badgen.net/bundlephobia/min/react-formist) ![minzip](https://badgen.net/bundlephobia/minzip/react-formist)
+![lic](https://badgen.net/npm/license/react-formist) ![min](https://badgen.net/bundlephobia/min/react-formist) ![minzip](https://badgen.net/bundlephobia/minzip/react-formist) ![commits](https://badgen.net/github/open-issues/iacoware/react-formist)
 
 Install
 
@@ -101,8 +101,12 @@ function MoreComplexForm({ onSubmit }) {
                 {data.releases.map((release, index) => (
                     <div key={release.id}>
                         <span>{release.id} - </span>
-                        <TextField {...formist.field(`releases.${index}.location`)} />
-                        <TextField {...formist.field(`releases.${index}.date`)} />
+                        <TextField
+                            {...formist.field(`releases.${index}.location`)}
+                        />
+                        <TextField
+                            {...formist.field(`releases.${index}.date`)}
+                        />
                     </div>
                 ))}
             </div>
