@@ -1,4 +1,4 @@
-## vNext
+## v0.2.8
 
 -   Fix sparse array bug, issue [#7](https://github.com/iacoware/react-formist/issues/7)
 -   Better error when the target object and property name expect different types. Related to [#6](https://github.com/iacoware/react-formist/issues/6)
