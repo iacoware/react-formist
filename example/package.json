@@ -9,7 +9,7 @@
         "url": "https://github.com/iacoware/react-formist"
     },
     "scripts": {
-        "clean": "rm -rf dist .cache && jest --clearCache",
+        "clean": "rm -rf dist .cache",
         "start": "npm run clean && eslint src && parcel ./index.html --no-autoinstall --open"
     },
     "dependencies": {
