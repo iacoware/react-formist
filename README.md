@@ -20,8 +20,10 @@ Run the example
 -   ... and even more nested like
     -   `customer.address.0.city` and `customer.address.0.street`
     -   `customer.address.1.city` and `customer.address.1.street`
--   Optional integration with [Yup](https://github.com/jquense/yup)
+-   Support sync or async validation (`options.onValidate`)
+-   Optional integration with [Yup](https://github.com/jquense/yup) (`options.schema`)
 -   Good tests suite
+-   Used in production
 -   Zero dependencies
 
 ## Usage
