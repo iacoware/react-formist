@@ -9,3 +9,21 @@ test("does not mutate original", () => {
 
     expect(result === obj).toBe(false)
 })
+
+test("root, type mismatch (object instead of array)", () => {
+    expect(() => setPath("0", 68, {})).toThrow(/mismatch/)
+})
+
+test("root, type mismatch (array instead of object)", () => {
+    expect(() => setPath("age", 68, [])).toThrow(/mismatch/)
+})
+
+test("nested, type mismatch (object instead of array)", () => {
+    expect(() =>
+        setPath("addresses.0.city", "Florence", { addresses: {} }),
+    ).toThrow(/mismatch/)
+})
+
+test("nested type mismatch (array instead of object)", () => {
+    expect(() => setPath("0.addresses.0", "Florence", [[]])).toThrow(/mismatch/)
+})
