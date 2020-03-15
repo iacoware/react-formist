@@ -26,6 +26,9 @@ const useFormist = (initialValues, options) => {
         onChange(e) {
             changes.change(name, e.target.value)
         },
+        onBlur(e) {
+            validation.validate()
+        },
     })
 
     const form = () => ({

@@ -48,3 +48,17 @@ test("previous errors, validation success", async () => {
 
     expect(result.current.errors).toStrictEqual({})
 })
+
+test("changed value + onBlur", async () => {
+    const onValidate = () => ({ age: "age is not a number" })
+    const { result } = renderHook(() => useFormist({}, { onValidate }))
+
+    await act(async () => {
+        await result.current.change("age", "not_a_number")
+        await result.current.field("age").onBlur({})
+    })
+
+    expect(result.current.errors.age).toMatch(/age is not a number/)
+})
+
+test.skip("unchanged value + onBlur", async () => {})
