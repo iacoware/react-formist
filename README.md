@@ -1,6 +1,6 @@
 # Formist - minimal react hook form handler
 
-![lic](https://badgen.net/npm/license/react-formist) ![min](https://badgen.net/bundlephobia/min/react-formist) ![minzip](https://badgen.net/bundlephobia/minzip/react-formist) ![commits](https://badgen.net/github/open-issues/iacoware/react-formist)
+![lic](https://badgen.net/npm/license/react-formist) [![Coverage Status](https://coveralls.io/repos/github/iacoware/react-formist/badge.svg?branch=master)](https://coveralls.io/github/iacoware/react-formist?branch=master) ![min](https://badgen.net/bundlephobia/min/react-formist) ![minzip](https://badgen.net/bundlephobia/minzip/react-formist) ![open issues](https://badgen.net/github/open-issues/iacoware/react-formist)
 
 Install
 
