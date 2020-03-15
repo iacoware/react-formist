@@ -19,7 +19,7 @@
         "test": "jest",
         "build": "npm run clean && eslint src && jest && rollup -c rollup.config.js",
         "release": "git push --tags && npm publish",
-        "coverage:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+        "coverage:coveralls": "jest --coverage",
         "example": "(cd example && npm install); (cd example && npm start)"
     },
     "peerDependencies": {
