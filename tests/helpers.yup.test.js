@@ -71,3 +71,26 @@ test("extract yup errors on nested arrays", () => {
         "address.0.street.2": "address.street is a required field",
     })
 })
+
+test("yup errors without a path", async () => {
+    let schema = yup.object().shape({
+        firstName: yup.string().required,
+    })
+
+    try {
+        extractYupErrors(validate([], schema))
+    } catch (err) {
+        expect(err.toString()).toMatch(
+            /ValidationError.*cast from the value.*\[\]/,
+        )
+    }
+})
+
+function validate(value, schema) {
+    try {
+        schema.validateSync(value, { abortEarly: false })
+        return null
+    } catch (error) {
+        return error
+    }
+}
