@@ -8,12 +8,7 @@ test("extract yup errors", () => {
         age: yup.number().required(),
     })
 
-    let result = {}
-    try {
-        schema.validateSync({}, { abortEarly: false })
-    } catch (errors) {
-        result = extractYupErrors(errors)
-    }
+    const result = extractYupErrors(validate({}, schema))
 
     expect(result).toStrictEqual({
         firstName: "firstName is a required field",
@@ -31,15 +26,10 @@ test("extract yup errors on arrays", () => {
         ),
     })
 
-    let result = {}
     const values = {
         address: [{ street: "5th avenue" }, { city: "Los Angeles" }],
     }
-    try {
-        schema.validateSync(values, { abortEarly: false })
-    } catch (errors) {
-        result = extractYupErrors(errors)
-    }
+    const result = extractYupErrors(validate(values, schema))
 
     expect(result).toStrictEqual({
         "address.0.city": "address.city is a required field",
@@ -57,15 +47,11 @@ test("extract yup errors on nested arrays", () => {
         ),
     })
 
-    let result = {}
     const values = {
         address: [{ street: ["5th", "avenue", ""] }],
     }
-    try {
-        schema.validateSync(values, { abortEarly: false })
-    } catch (errors) {
-        result = extractYupErrors(errors)
-    }
+    const result = extractYupErrors(validate(values, schema))
+
     expect(result).toStrictEqual({
         "address.0.city": "address.city is a required field",
         "address.0.street.2": "address.street is a required field",
