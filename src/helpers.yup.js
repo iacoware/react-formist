@@ -1,8 +1,9 @@
-const initialOpenBracketRegEx = /^\[/g
-const middleOpenBracketRegEx = /\[/g
-const closeBracketRegEx = /\]/g
 const arrayIndexRegEx = /\[\d+\]/g
 
+const fromRegEx = {
+    initialIndex: /^\[(\d+)\]/g,
+    middleIndex: /\[(\d+)\]/g,
+}
 const toRegEx = {
     initialIndex: /^(\d+)/g,
     middleIndex: /\.(\d+)/g,
@@ -16,9 +17,8 @@ export const isYupError = error => {
 
 export const fromYupPath = path =>
     path
-        .replace(initialOpenBracketRegEx, "")
-        .replace(middleOpenBracketRegEx, ".")
-        .replace(closeBracketRegEx, "")
+        .replace(fromRegEx.initialIndex, "$1")
+        .replace(fromRegEx.middleIndex, ".$1")
 
 export const toYupPath = path =>
     path
