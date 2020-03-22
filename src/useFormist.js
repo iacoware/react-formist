@@ -27,7 +27,7 @@ const useFormist = (initialValues, options) => {
             changes.change(name, e.target.value)
         },
         onBlur(e) {
-            //if (!changes.hasChanged(name)) return
+            if (!changes.isChanged(name)) return
             validation.validate()
         },
     })

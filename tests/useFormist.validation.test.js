@@ -61,7 +61,7 @@ test("changed value + onBlur", async () => {
     expect(result.current.errors.age).toMatch(/age is not a number/)
 })
 
-test.skip("unchanged value + onBlur", async () => {
+test("unchanged value + onBlur", async () => {
     const onValidate = () => ({ age: "age is not a number" })
     const { result } = renderHook(() => useFormist({}, { onValidate }))
 
