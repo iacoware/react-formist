@@ -17,3 +17,17 @@ test("change one", () => {
 
     expect(result.current.isChanged("name")).toBe(true)
 })
+
+test("change many", () => {
+    const { result } = renderHook(() => useChanges())
+
+    act(() => {
+        result.current.change("name", "Fred")
+        result.current.change("age", 48)
+        result.current.change("nickname", "@fred")
+    })
+
+    expect(result.current.isChanged("name")).toBe(true)
+    expect(result.current.isChanged("age")).toBe(true)
+    expect(result.current.isChanged("nickname")).toBe(true)
+})
