@@ -11,10 +11,15 @@ const movieSchema = yup.object().shape({
     releases: yup.array().of(releaseSchema),
 })
 
-function TextField({ value, onChange, error }) {
+function TextField({ value, onChange, onBlur, error }) {
     return (
         <>
-            <input type="text" value={value} onChange={onChange} />
+            <input
+                type="text"
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
             <span className="validation-error">{error}</span>
         </>
     )
