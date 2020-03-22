@@ -49,7 +49,7 @@ test("previous errors, validation success", async () => {
     expect(result.current.errors).toStrictEqual({})
 })
 
-test("changed value + onBlur", async () => {
+test("one field, one change value + onBlur", async () => {
     const onValidate = () => ({ age: "age is not a number" })
     const { result } = renderHook(() => useFormist({}, { onValidate }))
 
@@ -61,7 +61,7 @@ test("changed value + onBlur", async () => {
     expect(result.current.errors.age).toMatch(/age is not a number/)
 })
 
-test("unchanged value + onBlur", async () => {
+test("no changes + onBlur", async () => {
     const onValidate = () => ({ age: "age is not a number" })
     const { result } = renderHook(() => useFormist({}, { onValidate }))
 
@@ -70,4 +70,29 @@ test("unchanged value + onBlur", async () => {
     })
 
     expect(result.current.errors).toStrictEqual({})
+})
+
+test("many field, one change + onBlur", async () => {
+    const rules = {
+        name: value => (!value ? { name: "name is required" } : null),
+        age: value =>
+            !value || value != "42" ? { age: "age not quite right" } : null,
+    }
+    const onValidate = (values, name) => {
+        const rule = rules[name]
+        const value = values[name]
+        const result = rule(value)
+        return result
+        //const errors = rules.map(r => r(values[name])).filter(x => !x)
+        //return errors.length ? errors : null
+    }
+    const { result } = renderHook(() => useFormist({}, { onValidate }))
+
+    await act(async () => {
+        await result.current.change("age", "not_a_number")
+        await result.current.field("age").onBlur({})
+    })
+
+    expect(result.current.errors.age).toMatch(/age not quite right/)
+    expect(result.current.errors.name).not.toBeDefined()
 })

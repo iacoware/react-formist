@@ -28,7 +28,7 @@ const useFormist = (initialValues, options) => {
         },
         onBlur(e) {
             if (!changes.isChanged(name)) return
-            validation.validate()
+            validation.validate(name)
         },
     })
 

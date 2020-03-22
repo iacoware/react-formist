@@ -10,16 +10,16 @@ const useValidation = (values, options) => {
 
     const getError = name => getPath(name, errors) || ""
 
-    const validate = async () => {
+    const validate = async name => {
         if (hasErrors(errors)) clearErrors()
 
-        const errs1 = await invokeStandardValidation(options, values)
+        const errs1 = await invokeStandardValidation(options, values, name)
         if (errs1) {
             applyErrors(errs1)
             return errs1
         }
 
-        const errs2 = await invokeYupValidation(options, values)
+        const errs2 = await invokeYupValidation(options, values, name)
         if (errs2) {
             applyErrors(errs2)
             return errs2

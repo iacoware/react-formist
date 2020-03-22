@@ -1,12 +1,12 @@
 import { extractYupErrors, isYupError } from "./helpers.yup"
 
-export async function invokeStandardValidation(options, values) {
+export async function invokeStandardValidation(options, values, name) {
     if (!options.onValidate) return
 
-    return await options.onValidate(values)
+    return await options.onValidate(values, name)
 }
 
-export async function invokeYupValidation(options, values) {
+export async function invokeYupValidation(options, values, name) {
     if (!options.schema) return
 
     try {
