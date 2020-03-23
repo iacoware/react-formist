@@ -105,6 +105,24 @@ test("many field, one change + onBlur", async () => {
     expect(result.current.errors.name).not.toBeDefined()
 })
 
+test("previous error, one change + onBlur", async () => {
+    const schema = yup.object().shape({
+        name: yup.string().required(),
+        age: yup.number().required(),
+    })
+
+    const { result } = renderHook(() => useFormist({}, { schema }))
+
+    await act(async () => {
+        await result.current.setError("name", "name error")
+        await result.current.change("age", "not_a_number")
+        await result.current.field("age").onBlur({})
+    })
+
+    expect(result.current.errors.age).toMatch(/age must be a `number` type/)
+    expect(result.current.errors.name).toBe("name error")
+})
+
 const getFieldProps = (fieldName, result) =>
     result.current.getFieldProps(fieldName)
 const getErrors = obj => obj.current.errors

@@ -11,7 +11,7 @@ const useValidation = (values, options) => {
     const getError = name => getPath(name, errors) || ""
 
     const validate = async name => {
-        if (hasErrors(errors)) clearErrors()
+        if (hasErrors(errors)) clearErrors(name)
 
         const errs1 = await invokeStandardValidation(options, values, name)
         if (errs1) {
@@ -33,8 +33,9 @@ const useValidation = (values, options) => {
         Object.keys(errors).forEach(path => setError(path, errors[path]))
     }
 
-    const clearErrors = () => {
-        setErrors({})
+    const clearErrors = path => {
+        if (path) setError(path, "")
+        else setErrors({})
     }
 
     return {
