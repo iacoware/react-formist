@@ -1,3 +1,11 @@
+## vNext - ???
+
+-   added `valdationMode: blur|submit` (default is `blur`)
+
+## v0.2.9 - 2020-03-19
+
+-   bugfix - yup integration: don't swallow exceptions which aren't for field validation
+
 ## v0.2.8 - 2020-03-15
 
 -   Fix sparse array bug, issue [#7](https://github.com/iacoware/react-formist/issues/7)
