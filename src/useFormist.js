@@ -7,6 +7,7 @@ const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 const useFormist = (initialValues, options) => {
     initialValues = initialValues || {}
     options = options || {}
+    options.validationMode = options.validationMode || "blur"
     const optionsOnSubmit = safeFn(options.onSubmit)
 
     const changes = useChanges(initialValues)
@@ -27,7 +28,8 @@ const useFormist = (initialValues, options) => {
             changes.change(name, e.target.value)
         },
         onBlur(e) {
-            if (!changes.isChanged(name)) return
+            const isValidationMode = mode => options.validationMode === mode
+            if (!isValidationMode("blur") || !changes.isChanged(name)) return
             validation.validate(name)
         },
     })

@@ -1,4 +1,4 @@
-/*globals test, expect*/
+/*globals test, expect, jest*/
 import { renderHook, act } from "@testing-library/react-hooks"
 import useFormist from "../src/useFormist"
 
@@ -47,3 +47,18 @@ test("previous errors, validation success", async () => {
 
     expect(result.current.errors).toStrictEqual({})
 })
+
+test("validationMode: submit", async () => {
+    const onValidate = jest.fn()
+    const options = { onValidate, validationMode: "submit" }
+    const { result } = renderHook(() => useFormist({}, options))
+
+    act(() => result.current.change("name", "Fred"))
+    result.current.field("name").onBlur(event())
+    expect(onValidate).not.toHaveBeenCalled()
+
+    await act(() => result.current.submit())
+    expect(onValidate).toHaveBeenCalled()
+})
+
+const event = () => ({})
