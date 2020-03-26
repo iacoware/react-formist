@@ -8,6 +8,8 @@ import useFormist from "../src/useFormist"
  * Eg: {firstName: "This is required"}
  */
 
+const noErrors = () => {}
+
 test("validate through options.onValidation", async () => {
     const { result } = renderHook(() =>
         useFormist(null, {
@@ -37,62 +39,11 @@ test("validation fail", async () => {
 })
 
 test("previous errors, validation success", async () => {
-    const { result } = renderHook(() =>
-        useFormist(null, { onValidate: () => {} }),
-    )
+    const options = { onValidation: noErrors }
+    const { result } = renderHook(() => useFormist({}, options))
 
-    await act(async () => {
-        await result.current.setError("firstName", "Try again!")
-        return result.current.submit()
-    })
+    act(() => result.current.setError("firstName", "Try again!"))
+    await act(() => result.current.submit())
 
     expect(result.current.errors).toStrictEqual({})
-})
-
-test("one field, one change value + onBlur", async () => {
-    const onValidate = () => ({ age: "age is not a number" })
-    const { result } = renderHook(() => useFormist({}, { onValidate }))
-
-    await act(async () => {
-        await result.current.change("age", "not_a_number")
-        await result.current.field("age").onBlur({})
-    })
-
-    expect(result.current.errors.age).toMatch(/age is not a number/)
-})
-
-test("no changes + onBlur", async () => {
-    const onValidate = () => ({ age: "age is not a number" })
-    const { result } = renderHook(() => useFormist({}, { onValidate }))
-
-    await act(async () => {
-        await result.current.field("age").onBlur({})
-    })
-
-    expect(result.current.errors).toStrictEqual({})
-})
-
-test("many field, one change + onBlur", async () => {
-    const rules = {
-        name: value => (!value ? { name: "name is required" } : null),
-        age: value =>
-            !value || value != "42" ? { age: "age not quite right" } : null,
-    }
-    const onValidate = (values, name) => {
-        const rule = rules[name]
-        const value = values[name]
-        const result = rule(value)
-        return result
-        //const errors = rules.map(r => r(values[name])).filter(x => !x)
-        //return errors.length ? errors : null
-    }
-    const { result } = renderHook(() => useFormist({}, { onValidate }))
-
-    await act(async () => {
-        await result.current.change("age", "not_a_number")
-        await result.current.field("age").onBlur({})
-    })
-
-    expect(result.current.errors.age).toMatch(/age not quite right/)
-    expect(result.current.errors.name).not.toBeDefined()
 })
