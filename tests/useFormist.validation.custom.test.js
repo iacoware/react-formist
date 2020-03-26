@@ -31,14 +31,8 @@ test("many field, one change + onBlur", async () => {
         age: value =>
             !value || value != "42" ? { age: "age not quite right" } : null,
     }
-    const onValidate = (values, name) => {
-        const rule = rules[name]
-        const value = values[name]
-        const result = rule(value)
-        return result
-        //const errors = rules.map(r => r(values[name])).filter(x => !x)
-        //return errors.length ? errors : null
-    }
+    const onValidate = (values, name) => rules[name](values[name])
+
     const { result } = renderHook(() => useFormist({}, { onValidate }))
 
     await act(async () => {

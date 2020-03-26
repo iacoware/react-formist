@@ -39,7 +39,7 @@ test("validation fail", async () => {
 })
 
 test("previous errors, validation success", async () => {
-    const options = { onValidation: noErrors }
+    const options = { onValidate: noErrors }
     const { result } = renderHook(() => useFormist({}, options))
 
     act(() => result.current.setError("firstName", "Try again!"))
