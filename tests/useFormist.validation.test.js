@@ -61,4 +61,24 @@ test("validationMode: submit", async () => {
     expect(onValidate).toHaveBeenCalled()
 })
 
+test("validationMode: blur", async () => {
+    const onValidate = jest.fn()
+    const options = { onValidate, validationMode: "blur" }
+    const { result } = renderHook(() => useFormist({}, options))
+
+    act(() => result.current.change("name", "Fred"))
+    result.current.field("name").onBlur(event())
+    expect(onValidate).toHaveBeenCalled()
+})
+
+test("default validationMode", async () => {
+    const onValidate = jest.fn()
+    const options = { onValidate }
+    const { result } = renderHook(() => useFormist({}, options))
+
+    act(() => result.current.change("name", "Fred"))
+    result.current.field("name").onBlur(event())
+    expect(onValidate).toHaveBeenCalled()
+})
+
 const event = () => ({})
