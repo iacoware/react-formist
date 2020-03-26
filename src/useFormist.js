@@ -12,6 +12,7 @@ const useFormist = (initialValues, options) => {
 
     const changes = useChanges(initialValues)
     const validation = useValidation(changes.values, options)
+    const isValidationMode = mode => options.validationMode === mode
 
     const submit = async () => {
         const errs = await validation.validate()
@@ -27,10 +28,9 @@ const useFormist = (initialValues, options) => {
         onChange(e) {
             changes.change(name, e.target.value)
         },
-        onBlur(e) {
-            const isValidationMode = mode => options.validationMode === mode
-            if (!isValidationMode("blur") || !changes.isChanged(name)) return
-            validation.validate(name)
+        onBlur() {
+            if (isValidationMode("blur") && changes.isChanged(name))
+                validation.validate(name)
         },
     })
 
