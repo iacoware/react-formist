@@ -1,5 +1,6 @@
 import React from "react"
 import useFormist from "../../../src/useFormist"
+import Field from "./field"
 
 export default function SimpleForm({ onSubmit }) {
     const initialValues = { firstName: "Kent", lastName: "Beck" }
@@ -7,13 +8,13 @@ export default function SimpleForm({ onSubmit }) {
 
     return (
         <form {...formist.form()}>
-            <div>
+            <Field label="Firstname">
                 <input type="text" {...formist.field("firstName")} />
-            </div>
-            <div>
+            </Field>
+            <Field label="Lastname">
                 <input type="text" {...formist.field("lastName")} />
-            </div>
-            <button>Submit</button>
+            </Field>
+            <button className="button is-primary">Submit</button>
         </form>
     )
 }
