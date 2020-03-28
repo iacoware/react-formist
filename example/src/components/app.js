@@ -9,17 +9,21 @@ const App = () => {
     const onSubmit = values => setFormValues(values)
 
     return (
-        <div>
-            <h1>Simple form</h1>
-            <SimpleForm onSubmit={onSubmit} />
+        <div className="section">
+            <div className="container">
+                <h1 className="title">React-formist examples</h1>
 
-            <h1>Yup form</h1>
-            <YupForm onSubmit={onSubmit} />
+                <h1>Simple form</h1>
+                <SimpleForm onSubmit={onSubmit} />
 
-            <h1>More complex form</h1>
-            <MoreComplexForm onSubmit={onSubmit} />
+                <h1>Yup form</h1>
+                <YupForm onSubmit={onSubmit} />
 
-            <pre>{JSON.stringify(formValues, null, 2)}</pre>
+                <h1>More complex form</h1>
+                <MoreComplexForm onSubmit={onSubmit} />
+
+                <pre>{JSON.stringify(formValues, null, 2)}</pre>
+            </div>
         </div>
     )
 }
