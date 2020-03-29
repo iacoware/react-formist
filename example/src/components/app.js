@@ -11,13 +11,12 @@ function ShowForm({ title, component }) {
     }
 
     return (
-        <div style={{ marginBottom: "2em" }}>
-            <h2 className="is-size-4">{title}</h2>
-            <div className="columns">
-                <div className="column is-one-third">
-                    {component({ onSubmit })}
-                </div>
-                <div className="column is-one-third">
+        <div className="show-form panel is-success">
+            <p className="panel-heading">{title}</p>
+
+            <div className="panel-block columns">
+                <div className="column is-half">{component({ onSubmit })}</div>
+                <div className="column is-half codeblock">
                     <pre>{JSON.stringify(values, null, 2)}</pre>
                 </div>
             </div>

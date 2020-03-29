@@ -3,7 +3,7 @@ import useFormist from "../../../src/useFormist"
 import Field from "./field"
 
 export default function SimpleForm({ onSubmit }) {
-    const initialValues = { firstName: "Kent", lastName: "Beck" }
+    const initialValues = { firstName: "Darth", lastName: "Vader" }
     const formist = useFormist(initialValues, { onSubmit })
 
     return (
@@ -14,7 +14,7 @@ export default function SimpleForm({ onSubmit }) {
             <Field label="Lastname">
                 <input type="text" {...formist.field("lastName")} />
             </Field>
-            <button className="button is-primary">Submit</button>
+            <button className="button is-warning">Submit</button>
         </form>
     )
 }

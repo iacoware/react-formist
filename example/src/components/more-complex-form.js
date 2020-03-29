@@ -15,9 +15,11 @@ const movieSchema = yup.object().shape({
 function InlineField({ label, children }) {
     return (
         <div className="field is-horizontal">
-            <div className="field-label is-normal">
-                <label className="label">{label}</label>
-            </div>
+            {label && (
+                <div className="field-label is-normal">
+                    <label className="label">{label}</label>
+                </div>
+            )}
             <div className="field-body">
                 {React.Children.map(children, input => (
                     <div className="field">
@@ -39,16 +41,16 @@ export default function MoreComplexForm({ onSubmit }) {
     return (
         <form {...formist.form()}>
             <div>
-                <Field label="Name">
+                <Field label="Movie name">
                     <input type="text" {...formist.field("name")} />
-                    <span>{formist.error("name")}</span>
                 </Field>
             </div>
 
+            <label className="label">Releases</label>
             <div>
                 {data.releases.map((release, index) => (
                     <div key={release.id}>
-                        <InlineField label={`Release ${release.id}`}>
+                        <InlineField>
                             <input
                                 type="text"
                                 placeholder="location"
@@ -64,7 +66,7 @@ export default function MoreComplexForm({ onSubmit }) {
                 ))}
             </div>
 
-            <button className="button is-primary" {...formist.submitButton()}>
+            <button className="button is-warning" {...formist.submitButton()}>
                 Submit
             </button>
         </form>

@@ -6,3 +6,17 @@ body {
 body {
     background-color: #eee;
 }
+
+.show-form {
+    margin-bottom: 4em !important;
+    width: 60%;
+    background-color: #fff;
+}
+
+.codeblock {
+    margin-top: 2em;
+}
+
+.panel-block {
+    align-items: flex-start;
+}

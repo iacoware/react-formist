@@ -22,7 +22,7 @@ export default function YupForm({ onSubmit }) {
                 <span>{formist.errors.lastName}</span>
             </Field>
 
-            <button className="button is-primary" {...formist.submitButton()}>
+            <button className="button is-warning" {...formist.submitButton()}>
                 Submit
             </button>
         </form>
