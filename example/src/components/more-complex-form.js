@@ -1,5 +1,6 @@
 import React from "react"
 import * as yup from "yup"
+import Field from "./field"
 import useFormist from "../../../src/useFormist"
 
 const releaseSchema = yup.object().shape({
@@ -11,17 +12,21 @@ const movieSchema = yup.object().shape({
     releases: yup.array().of(releaseSchema),
 })
 
-function TextField({ value, onChange, onBlur, error }) {
+function InlineField({ label, children }) {
     return (
-        <>
-            <input
-                type="text"
-                value={value}
-                onChange={onChange}
-                onBlur={onBlur}
-            />
-            <span className="validation-error">{error}</span>
-        </>
+        <div className="field is-horizontal">
+            <div className="field-label is-normal">
+                <label className="label">{label}</label>
+            </div>
+            <div className="field-body">
+                {React.Children.map(children, input => (
+                    <div className="field">
+                        <div className="control">{addCssProps(input)}</div>
+                        <p className="help is-danger">{input.props.error}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
     )
 }
 
@@ -34,23 +39,38 @@ export default function MoreComplexForm({ onSubmit }) {
     return (
         <form {...formist.form()}>
             <div>
-                <TextField {...formist.field("name")} />
+                <Field label="Name">
+                    <input type="text" {...formist.field("name")} />
+                    <span>{formist.error("name")}</span>
+                </Field>
             </div>
 
             <div>
                 {data.releases.map((release, index) => (
                     <div key={release.id}>
-                        <span>{release.id} - </span>
-                        <TextField
-                            {...formist.field(`releases.${index}.location`)}
-                        />
-                        <TextField
-                            {...formist.field(`releases.${index}.date`)}
-                        />
+                        <InlineField label={`Release ${release.id}`}>
+                            <input
+                                type="text"
+                                placeholder="location"
+                                {...formist.field(`releases.${index}.location`)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="date"
+                                {...formist.field(`releases.${index}.date`)}
+                            />
+                        </InlineField>
                     </div>
                 ))}
             </div>
-            <button {...formist.submitButton()}>Submit</button>
+
+            <button className="button is-primary" {...formist.submitButton()}>
+                Submit
+            </button>
         </form>
     )
+}
+
+function addCssProps(input) {
+    return React.cloneElement(input, { className: "input" })
 }
