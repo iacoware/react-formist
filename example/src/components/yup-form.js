@@ -1,6 +1,7 @@
 import React from "react"
 import * as yup from "yup"
 import useFormist from "../../../src/useFormist"
+import Field from "./field"
 
 export default function YupForm({ onSubmit }) {
     const schema = yup.object().shape({
@@ -11,19 +12,19 @@ export default function YupForm({ onSubmit }) {
 
     return (
         <form {...formist.form()}>
-            <div>
+            <Field label="Firstname">
                 <input type="text" {...formist.field("firstName")} />
-                <span className="validation-error">
-                    {formist.errors.firstName}
-                </span>
-            </div>
-            <div>
+                <span>{formist.errors.firstName}</span>
+            </Field>
+
+            <Field label="Lastname">
                 <input type="text" {...formist.field("lastName")} />
-                <span className="validation-error">
-                    {formist.errors.lastName}
-                </span>
-            </div>
-            <button {...formist.submitButton()}>Submit</button>
+                <span>{formist.errors.lastName}</span>
+            </Field>
+
+            <button className="button is-primary" {...formist.submitButton()}>
+                Submit
+            </button>
         </form>
     )
 }
