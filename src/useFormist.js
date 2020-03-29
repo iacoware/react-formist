@@ -21,16 +21,16 @@ const useFormist = (initialValues, options) => {
         return changes.values
     }
 
-    const field = name => ({
-        name: name,
-        value: changes.getValue(name),
-        error: validation.getError(name),
+    const field = path => ({
+        name: path,
+        value: changes.getValue(path),
+        error: validation.getError(path),
         onChange(e) {
-            changes.change(name, e.target.value)
+            changes.change(path, e.target.value)
         },
         onBlur() {
-            if (isValidationMode("blur") && changes.isChanged(name))
-                validation.validate(name)
+            if (isValidationMode("blur") && changes.isChanged(path))
+                validation.validate(path)
         },
     })
 

@@ -8,18 +8,18 @@ const hasErrors = errs => isObject(errs) && !isEmpty(errs)
 const useValidation = (values, options) => {
     const [errors, setErrors] = useState({})
 
-    const getError = name => getPath(name, errors) || ""
+    const getError = path => getPath(path, errors) || ""
 
-    const validate = async name => {
-        if (hasErrors(errors)) clearErrors(name)
+    const validate = async path => {
+        if (hasErrors(errors)) clearErrors(path)
 
-        const errs1 = await invokeStandardValidation(options, values, name)
+        const errs1 = await invokeStandardValidation(options, values, path)
         if (errs1) {
             applyErrors(errs1)
             return errs1
         }
 
-        const errs2 = await invokeYupValidation(options, values, name)
+        const errs2 = await invokeYupValidation(options, values, path)
         if (errs2) {
             applyErrors(errs2)
             return errs2

@@ -6,7 +6,7 @@ const useChangeTracking = initialValues => {
     const [values, setValues] = useState(initialValues)
     const [changed, setChanged] = useState({})
 
-    const getValue = name => getPath(name, values) || ""
+    const getValue = path => getPath(path, values) || ""
 
     const change = (path, value) => {
         setChanged(prev => ({ ...prev, ...{ [path]: true } }))

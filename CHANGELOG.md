@@ -1,6 +1,7 @@
 ## vNext - ???
 
 -   added `valdationMode: blur|submit` (default is `blur`)
+-   Give some visual love to the examples (`npm run example`)
 
 ## v0.2.9 - 2020-03-19
 
