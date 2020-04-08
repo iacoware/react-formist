@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { getPath, setPath } from "./mapper"
 
 const useChangeTracking = initialValues => {
@@ -19,9 +19,9 @@ const useChangeTracking = initialValues => {
 
     return {
         values,
-        getValue,
-        change,
-        isChanged,
+        getValue: getValue,
+        change: useCallback(change, []),
+        isChanged: isChanged,
     }
 }
 

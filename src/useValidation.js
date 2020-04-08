@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { isObject, isEmpty } from "./helpers"
 import { getPath, setPath } from "./mapper"
 import { invokeStandardValidation, invokeYupValidation } from "./validation"
@@ -41,7 +41,7 @@ const useValidation = (values, options) => {
     return {
         validate,
         getError,
-        setError,
+        setError: useCallback(setError, []),
         errors,
     }
 }
