@@ -1,4 +1,4 @@
-## vNext - ???
+## v0.3.1 - 2020-04-08
 
 -   Calling `isChanged()` without a path return true if there's any error
 -   `change` function is memoized and usable as a `useEffect` dependency
