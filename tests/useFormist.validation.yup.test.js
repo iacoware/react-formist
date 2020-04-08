@@ -4,47 +4,41 @@ import { renderHook, act } from "@testing-library/react-hooks"
 import { log } from "../src/helpers"
 import useFormist from "../src/useFormist"
 
-test("validate through options.schema", async () => {
-    let schema = yup.object().shape({
-        firstName: yup.string().required(),
-        age: yup.number().required(),
-    })
+const nameAndAgeSchema = yup.object().shape({
+    name: yup.string().required(),
+    age: yup.number().required(),
+})
 
-    const { result } = renderHook(() =>
-        useFormist({ firstName: "" }, { schema }),
-    )
+test("validate through options.schema", async () => {
+    const schema = nameAndAgeSchema
+    const { result } = renderHook(() => useFormist({}, { schema }))
 
     await act(() => result.current.submit())
 
-    expect(getErrors(result).firstName).toBeDefined()
-    expect(getErrors(result).age).toBeDefined()
-    expect(getFieldProps("firstName", result).error).toBeDefined()
+    expect(result.current.errors.name).toBeDefined()
+    expect(result.current.errors.age).toBeDefined()
+    expect(result.current.field("name").error).toBeDefined()
 })
 
 test("change fields in error", async () => {
-    let schema = yup.object().shape({
-        firstName: yup.string().required(),
-        lastName: yup.string().required(),
-    })
-
+    const schema = nameAndAgeSchema
     const { result } = renderHook(() => useFormist({}, { schema }))
 
     await act(async () => {
-        await result.current.change("firstName", "John")
+        await result.current.change("name", "John")
+        await result.current.change("age", "")
         await result.current.validate()
     })
-
-    expect(getErrors(result).firstName).not.toBeDefined()
-    expect(getErrors(result).lastName).toBeDefined()
+    expect(result.current.errors.name).not.toBeDefined()
+    expect(result.current.errors.age).toBeDefined()
 
     await act(async () => {
-        await result.current.change("firstName", "")
-        await result.current.change("lastName", "Travolta")
+        await result.current.change("name", "")
+        await result.current.change("age", "25")
         await result.current.validate()
     })
-
-    expect(getErrors(result).firstName).toBeDefined()
-    expect(getErrors(result).lastName).not.toBeDefined()
+    expect(result.current.errors.name).toBeDefined()
+    expect(result.current.errors.age).not.toBeDefined()
 })
 
 test("nested schema", async () => {
@@ -89,11 +83,7 @@ test("non yup errors", async () => {
 })
 
 test("many field, one change + onBlur", async () => {
-    const schema = yup.object().shape({
-        name: yup.string().required(),
-        age: yup.number().required(),
-    })
-
+    const schema = nameAndAgeSchema
     const { result } = renderHook(() => useFormist({}, { schema }))
 
     await act(async () => {
@@ -106,11 +96,7 @@ test("many field, one change + onBlur", async () => {
 })
 
 test("previous error, one change + onBlur", async () => {
-    const schema = yup.object().shape({
-        name: yup.string().required(),
-        age: yup.number().required(),
-    })
-
+    const schema = nameAndAgeSchema
     const { result } = renderHook(() => useFormist({}, { schema }))
 
     await act(async () => {
@@ -122,7 +108,3 @@ test("previous error, one change + onBlur", async () => {
     expect(result.current.errors.age).toMatch(/age must be a `number` type/)
     expect(result.current.errors.name).toBe("name error")
 })
-
-const getFieldProps = (fieldName, result) =>
-    result.current.getFieldProps(fieldName)
-const getErrors = obj => obj.current.errors
