@@ -1,3 +1,8 @@
+## vNext - ???
+
+-   Calling `isChanged()` without a path return true if there's any error
+-   `change` function is memoized and usable as a `useEffect` dependency
+
 ## v0.3.0 - 2020-03-29
 
 -   added `valdationMode: blur|submit` (default is `blur`)
