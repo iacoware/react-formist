@@ -31,3 +31,17 @@ test("change many", () => {
     expect(result.current.isChanged("age")).toBe(true)
     expect(result.current.isChanged("nickname")).toBe(true)
 })
+
+test("one change, no path", () => {
+    const { result } = renderHook(() => useChanges())
+
+    act(() => result.current.change("name", "Fred"))
+
+    expect(result.current.isChanged()).toBe(true)
+})
+
+test("no changes, no path", () => {
+    const { result } = renderHook(() => useChanges())
+
+    expect(result.current.isChanged()).toBe(false)
+})

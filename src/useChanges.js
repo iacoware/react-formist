@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react"
 import { getPath, setPath } from "./mapper"
+import { isEmpty } from "./helpers"
 
 const useChangeTracking = initialValues => {
     initialValues = initialValues || {}
@@ -14,7 +15,8 @@ const useChangeTracking = initialValues => {
     }
 
     const isChanged = path => {
-        return !!changed[path]
+        if (path) return !!changed[path]
+        else return !isEmpty(changed)
     }
 
     return {
