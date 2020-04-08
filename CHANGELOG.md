@@ -2,6 +2,7 @@
 
 -   Calling `isChanged()` without a path return true if there's any error
 -   `change` function is memoized and usable as a `useEffect` dependency
+-   Add `isValid(path|null)`. It must be called after a `validate()` call to know if a filed|form is valid
 
 ## v0.3.0 - 2020-03-29
 

@@ -26,6 +26,8 @@ const useValidation = (values, options) => {
         }
     }
 
+    const isValid = path => (path ? !getError(path) : isEmpty(errors))
+
     const setError = (path, message) =>
         setErrors(prev => setPath(path, message, prev))
 
@@ -40,6 +42,7 @@ const useValidation = (values, options) => {
 
     return {
         validate,
+        isValid,
         getError,
         setError: useCallback(setError, []),
         errors,

@@ -55,6 +55,7 @@ const useFormist = (initialValues, options) => {
         errors: validation.errors,
         error: validation.getError,
         setError: validation.setError,
+        isValid: validation.isValid,
         validate: validation.validate,
         field,
         form,
