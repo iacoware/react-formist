@@ -16,6 +16,26 @@ test("extract yup errors", () => {
     })
 })
 
+test("extract yup global error", () => {
+    let schema = yup
+        .object()
+        .shape({
+            firstName: yup.string(),
+            age: yup.number(),
+        })
+        .test(
+            "not-both-empty",
+            "one of firstName and age should have a value",
+            obj => obj.firstName || obj.age,
+        )
+
+    const result = extractYupErrors(validate({}, schema))
+
+    expect(result).toStrictEqual({
+        __global: "one of firstName and age should have a value",
+    })
+})
+
 test("extract yup errors on arrays", () => {
     let schema = yup.object().shape({
         address: yup.array().of(

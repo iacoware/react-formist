@@ -53,6 +53,7 @@ const useFormist = (initialValues, options) => {
         change: changes.change,
         isChanged: changes.isChanged,
         errors: validation.errors,
+        globalError: validation.errors["__global"],
         error: validation.getError,
         setError: validation.setError,
         isValid: validation.isValid,
