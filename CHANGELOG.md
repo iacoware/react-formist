@@ -1,3 +1,9 @@
+## vNext - ???
+
+-   Add `touch(path, value)` function which mark the field as touched
+    -   Breaking change: `change(path, value)` changes the value without marking the field as touched
+    -   Breaking change: rename `isChanged` to `isTouched`
+
 ## v0.3.1 - 2020-04-08
 
 -   Calling `isChanged()` without a path return true if there's any error
