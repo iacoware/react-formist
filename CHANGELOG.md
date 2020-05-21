@@ -1,4 +1,4 @@
-## vNext - ???
+## v1.0.0 - 2020-05-21
 
 -   Add `touch(path, value)` function which mark the field as touched
     -   Breaking change: `change(path, value)` changes the value without marking the field as touched
