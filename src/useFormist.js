@@ -11,11 +11,13 @@ const useFormist = (initialValues, options) => {
     const optionsOnSubmit = safeFn(options.onSubmit)
 
     const changes = useChanges(initialValues)
-    const validation = useValidation(changes.values, options)
+    const validation = useValidation(options)
     const isValidationMode = (mode) => options.validationMode === mode
 
+    const validate = () => validation.validate(changes.values)
+
     const submit = async () => {
-        const errs = await validation.validate()
+        const errs = await validation.validate(changes.values)
         if (hasErrors(errs)) return
         await optionsOnSubmit(changes.values)
         return changes.values
@@ -30,7 +32,7 @@ const useFormist = (initialValues, options) => {
         },
         onBlur() {
             if (isValidationMode("blur") && changes.isTouched(path))
-                validation.validate(path)
+                validation.validate(changes.values, path)
         },
     })
 
@@ -57,7 +59,7 @@ const useFormist = (initialValues, options) => {
         error: validation.getError,
         setError: validation.setError,
         isValid: validation.isValid,
-        validate: validation.validate,
+        validate: validate,
         field,
         form,
         submitButton,

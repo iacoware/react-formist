@@ -5,12 +5,12 @@ import { invokeStandardValidation, invokeYupValidation } from "./validation"
 
 const hasErrors = (errs) => isObject(errs) && !isEmpty(errs)
 
-const useValidation = (values, options) => {
+const useValidation = (options) => {
     const [errors, setErrors] = useState({})
 
     const getError = (path) => getPath(path, errors) || ""
 
-    const validate = async (path) => {
+    const validate = async (values, path) => {
         if (hasErrors(errors)) clearErrors(path)
 
         const errs1 = await invokeStandardValidation(options, values, path)
