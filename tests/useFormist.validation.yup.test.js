@@ -87,7 +87,7 @@ test("many field, one change + onBlur", async () => {
     const { result } = renderHook(() => useFormist({}, { schema }))
 
     await act(async () => {
-        await result.current.change("age", "not_a_number")
+        await result.current.touch("age", "not_a_number")
         await result.current.field("age").onBlur({})
     })
 
@@ -101,7 +101,7 @@ test("previous error, one change + onBlur", async () => {
 
     await act(async () => {
         await result.current.setError("name", "name error")
-        await result.current.change("age", "not_a_number")
+        await result.current.touch("age", "not_a_number")
         await result.current.field("age").onBlur({})
     })
 

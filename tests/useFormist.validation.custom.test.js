@@ -7,7 +7,7 @@ test("one field, one change value + onBlur", async () => {
     const { result } = renderHook(() => useFormist({}, { onValidate }))
 
     await act(async () => {
-        await result.current.change("age", "not_a_number")
+        await result.current.touch("age", "not_a_number")
         await result.current.field("age").onBlur({})
     })
 
@@ -27,8 +27,8 @@ test("no changes + onBlur", async () => {
 
 test("many field, one change + onBlur", async () => {
     const rules = {
-        name: value => (!value ? { name: "name is required" } : null),
-        age: value =>
+        name: (value) => (!value ? { name: "name is required" } : null),
+        age: (value) =>
             !value || value != "42" ? { age: "age not quite right" } : null,
     }
     const onValidate = (values, name) => rules[name](values[name])
@@ -36,7 +36,7 @@ test("many field, one change + onBlur", async () => {
     const { result } = renderHook(() => useFormist({}, { onValidate }))
 
     await act(async () => {
-        await result.current.change("age", "not_a_number")
+        await result.current.touch("age", "not_a_number")
         await result.current.field("age").onBlur({})
     })
 

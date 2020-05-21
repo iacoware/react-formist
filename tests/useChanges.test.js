@@ -10,38 +10,50 @@ test("no initial values", () => {
     expect(result2.current.values).toStrictEqual({})
 })
 
-test("change one", () => {
+test("single path, change one", () => {
     const { result } = renderHook(() => useChanges())
 
-    act(() => result.current.change("name", "Fred"))
+    act(() => result.current.touch("name", "Fred"))
 
-    expect(result.current.isChanged("name")).toBe(true)
+    expect(result.current.isTouched("name")).toBe(true)
 })
 
-test("change many", () => {
+test("single path, change many", () => {
+    const { result } = renderHook(() => useChanges())
+
+    act(() => {
+        result.current.touch("name", "Fred")
+        result.current.touch("age", 48)
+        result.current.touch("nickname", "@fred")
+    })
+
+    expect(result.current.isTouched("name")).toBe(true)
+    expect(result.current.isTouched("age")).toBe(true)
+    expect(result.current.isTouched("nickname")).toBe(true)
+})
+
+test("whole form, one change", () => {
+    const { result } = renderHook(() => useChanges())
+
+    act(() => result.current.touch("name", "Fred"))
+
+    expect(result.current.isTouched()).toBe(true)
+})
+
+test("whole form, no changes", () => {
+    const { result } = renderHook(() => useChanges())
+
+    expect(result.current.isTouched()).toBe(false)
+})
+
+test("touch vs change", () => {
     const { result } = renderHook(() => useChanges())
 
     act(() => {
         result.current.change("name", "Fred")
-        result.current.change("age", 48)
-        result.current.change("nickname", "@fred")
+        result.current.touch("age", "21")
     })
 
-    expect(result.current.isChanged("name")).toBe(true)
-    expect(result.current.isChanged("age")).toBe(true)
-    expect(result.current.isChanged("nickname")).toBe(true)
-})
-
-test("one change, no path", () => {
-    const { result } = renderHook(() => useChanges())
-
-    act(() => result.current.change("name", "Fred"))
-
-    expect(result.current.isChanged()).toBe(true)
-})
-
-test("no changes, no path", () => {
-    const { result } = renderHook(() => useChanges())
-
-    expect(result.current.isChanged()).toBe(false)
+    expect(result.current.isTouched("name")).toBe(false)
+    expect(result.current.isTouched("age")).toBe(true)
 })

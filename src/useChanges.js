@@ -5,25 +5,30 @@ import { isEmpty } from "./helpers"
 const useChangeTracking = (initialValues) => {
     initialValues = initialValues || {}
     const [values, setValues] = useState(initialValues)
-    const [changed, setChanged] = useState({})
+    const [touched, setTouched] = useState({})
 
     const getValue = (path) => getPath(path, values) || ""
 
     const change = (path, value) => {
-        setChanged((prev) => ({ ...prev, ...{ [path]: true } }))
         return setValues((prev) => setPath(path, value, prev))
     }
 
-    const isChanged = (path) => {
-        if (path) return !!changed[path]
-        else return !isEmpty(changed)
+    const touch = (path, value) => {
+        setTouched((prev) => ({ ...prev, ...{ [path]: true } }))
+        return change(path, value)
+    }
+
+    const isTouched = (path) => {
+        if (path) return !!touched[path]
+        else return !isEmpty(touched)
     }
 
     return {
         values,
         getValue: getValue,
         change: useCallback(change, []),
-        isChanged: isChanged,
+        touch: useCallback(touch, []),
+        isTouched: isTouched,
     }
 }
 

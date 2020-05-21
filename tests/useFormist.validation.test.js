@@ -66,7 +66,7 @@ test("validationMode: blur", async () => {
     const options = { onValidate, validationMode: "blur" }
     const { result } = renderHook(() => useFormist({}, options))
 
-    act(() => result.current.change("name", "Fred"))
+    act(() => result.current.touch("name", "Fred"))
     result.current.field("name").onBlur(event())
     expect(onValidate).toHaveBeenCalled()
 })
@@ -76,7 +76,7 @@ test("default validationMode", async () => {
     const options = { onValidate }
     const { result } = renderHook(() => useFormist({}, options))
 
-    act(() => result.current.change("name", "Fred"))
+    act(() => result.current.touch("name", "Fred"))
     result.current.field("name").onBlur(event())
     expect(onValidate).toHaveBeenCalled()
 })

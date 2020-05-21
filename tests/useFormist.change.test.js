@@ -51,11 +51,11 @@ test("change one, keep others", () => {
     expect(exceptResult).toStrictEqual(exceptInitial)
 })
 
-const event = value => ({ target: { value: value } })
-const except = propName => obj => {
+const event = (value) => ({ target: { value: value } })
+const except = (propName) => (obj) => {
     const clone = { ...obj }
     delete clone[propName]
     return clone
 }
 
-const getValues = obj => obj.current.values
+const getValues = (obj) => obj.current.values

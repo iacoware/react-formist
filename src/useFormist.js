@@ -26,10 +26,10 @@ const useFormist = (initialValues, options) => {
         value: changes.getValue(path),
         error: validation.getError(path),
         onChange(e) {
-            changes.change(path, e.target.value)
+            changes.touch(path, e.target.value)
         },
         onBlur() {
-            if (isValidationMode("blur") && changes.isChanged(path))
+            if (isValidationMode("blur") && changes.isTouched(path))
                 validation.validate(path)
         },
     })
@@ -51,7 +51,8 @@ const useFormist = (initialValues, options) => {
     return {
         values: changes.values,
         change: changes.change,
-        isChanged: changes.isChanged,
+        touch: changes.touch,
+        isChanged: changes.isTouched,
         errors: validation.errors,
         error: validation.getError,
         setError: validation.setError,
