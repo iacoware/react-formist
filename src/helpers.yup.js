@@ -9,18 +9,18 @@ const toRegEx = {
     middleIndex: /\.(\d+)/g,
 }
 
-const adaptMessage = msg => msg.replace(arrayIndexRegEx, "")
+const adaptMessage = (msg) => msg.replace(arrayIndexRegEx, "")
 
-export const isYupError = error => {
+export const isYupError = (error) => {
     return typeof error === "object" && !!error.inner
 }
 
-export const fromYupPath = path =>
+export const fromYupPath = (path) =>
     path
         .replace(fromRegEx.initialIndex, "$1")
         .replace(fromRegEx.middleIndex, ".$1")
 
-export const toYupPath = path =>
+export const toYupPath = (path) =>
     path
         .replace(toRegEx.initialIndex, "[$1]")
         .replace(toRegEx.middleIndex, "[$1]")

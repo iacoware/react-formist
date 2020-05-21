@@ -17,7 +17,9 @@
     "scripts": {
         "clean": "rm -rf dist .cache && jest --clearCache",
         "test": "jest",
-        "build": "npm run clean && eslint src && jest && rollup -c rollup.config.js",
+        "test:watch": "jest --watch",
+        "lint": "eslint src",
+        "build": "npm run clean && npm run lint && jest && rollup -c rollup.config.js",
         "release": "git push --tags && npm publish",
         "coverage:coveralls": "jest --coverage",
         "example": "(cd example && npm install); (cd example && npm start)"

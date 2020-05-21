@@ -2,7 +2,7 @@ import { safeFn, isObject, isEmpty } from "./helpers"
 import useChanges from "./useChanges"
 import useValidation from "./useValidation"
 
-const hasErrors = errs => isObject(errs) && !isEmpty(errs)
+const hasErrors = (errs) => isObject(errs) && !isEmpty(errs)
 
 const useFormist = (initialValues, options) => {
     initialValues = initialValues || {}
@@ -12,7 +12,7 @@ const useFormist = (initialValues, options) => {
 
     const changes = useChanges(initialValues)
     const validation = useValidation(changes.values, options)
-    const isValidationMode = mode => options.validationMode === mode
+    const isValidationMode = (mode) => options.validationMode === mode
 
     const submit = async () => {
         const errs = await validation.validate()
@@ -21,7 +21,7 @@ const useFormist = (initialValues, options) => {
         return changes.values
     }
 
-    const field = path => ({
+    const field = (path) => ({
         name: path,
         value: changes.getValue(path),
         error: validation.getError(path),

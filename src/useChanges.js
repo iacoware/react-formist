@@ -2,19 +2,19 @@ import { useState, useCallback } from "react"
 import { getPath, setPath } from "./mapper"
 import { isEmpty } from "./helpers"
 
-const useChangeTracking = initialValues => {
+const useChangeTracking = (initialValues) => {
     initialValues = initialValues || {}
     const [values, setValues] = useState(initialValues)
     const [changed, setChanged] = useState({})
 
-    const getValue = path => getPath(path, values) || ""
+    const getValue = (path) => getPath(path, values) || ""
 
     const change = (path, value) => {
-        setChanged(prev => ({ ...prev, ...{ [path]: true } }))
-        return setValues(prev => setPath(path, value, prev))
+        setChanged((prev) => ({ ...prev, ...{ [path]: true } }))
+        return setValues((prev) => setPath(path, value, prev))
     }
 
-    const isChanged = path => {
+    const isChanged = (path) => {
         if (path) return !!changed[path]
         else return !isEmpty(changed)
     }
