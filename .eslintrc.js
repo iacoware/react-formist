@@ -16,7 +16,13 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:prettier/recommended",
     ],
-    plugins: ["react", "prettier"],
+    plugins: [
+        "react",
+        "prettier",
+        "react-hooks",
+        "testing-library",
+        "jest-dom",
+    ],
     settings: {
         react: {
             pragma: "React",
@@ -24,8 +30,9 @@ module.exports = {
         },
     },
     rules: {
-        "prettier/prettier": ["error"],
-        "react/prop-types": ["off"], // Disabled cause it's a playground. Enable it in prod
-        "no-unused-vars": ["warn"], // Disabled cause it's a playground. Enable it in prod
+        "prettier/prettier": ["error", { endOfLine: "auto" }],
+        "no-unused-vars": ["warn", { ignoreRestSiblings: true }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
     },
 }
