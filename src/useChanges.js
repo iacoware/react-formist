@@ -2,8 +2,10 @@ import { useState, useCallback } from "react"
 import { getPath, setPath } from "./mapper"
 import { isEmpty } from "./helpers"
 
+const emptyValues = {}
+
 const useChangeTracking = (initialValues) => {
-    initialValues = initialValues || {}
+    initialValues = initialValues || emptyValues
     const [values, setValues] = useState(initialValues)
     const [touched, setTouched] = useState({})
 
@@ -23,12 +25,17 @@ const useChangeTracking = (initialValues) => {
         else return !isEmpty(touched)
     }
 
+    const clear = () => {
+        setValues(emptyValues)
+    }
+
     return {
         values,
         getValue: getValue,
         change: useCallback(change, []),
         touch: useCallback(touch, []),
         isTouched: isTouched,
+        clear,
     }
 }
 
