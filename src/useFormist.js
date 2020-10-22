@@ -55,6 +55,7 @@ const useFormist = (initialValues, options) => {
         change: changes.change,
         touch: changes.touch,
         isChanged: changes.isTouched,
+        isTouched: changes.isTouched,
         errors: validation.errors,
         error: validation.getError,
         setError: validation.setError,

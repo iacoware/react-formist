@@ -29,4 +29,4 @@ test("getFieldProps() shape", () => {
 
 const getFieldProps = (fieldName, result) =>
     result.current.getFieldProps(fieldName)
-const getValues = obj => obj.current.values
+const getValues = (obj) => obj.current.values
