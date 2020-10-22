@@ -46,6 +46,7 @@ const useValidation = (options) => {
         getError,
         setError: useCallback(setError, []),
         errors,
+        clearErrors,
     }
 }
 
