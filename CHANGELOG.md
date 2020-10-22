@@ -1,3 +1,7 @@
+## v1.1.0 - 2020-10-22
+
+-   Add `clear(defaultValues | null)` function which clear current values and errors
+
 ## v1.0.0 - 2020-05-21
 
 -   Add `touch(path, value)` function which mark the field as touched
