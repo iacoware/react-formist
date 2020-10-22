@@ -81,4 +81,16 @@ test("default validationMode", async () => {
     expect(onValidate).toHaveBeenCalled()
 })
 
+test("clear values and errors", async () => {
+    const onValidate = () => ({ firstName: "In someway it's invalid" })
+    const { result } = renderHook(() => useFormist(null, { onValidate }))
+    act(() => result.current.change("firstName", "Fred"))
+    await act(() => result.current.submit())
+
+    act(() => result.current.clear())
+
+    expect(result.current.values).toStrictEqual({})
+    expect(result.current.errors).toStrictEqual({})
+})
+
 const event = () => ({})

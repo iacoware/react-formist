@@ -50,6 +50,11 @@ const useFormist = (initialValues, options) => {
         },
     })
 
+    const clear = (defaultValues) => {
+        changes.clear(defaultValues)
+        validation.clearErrors()
+    }
+
     return {
         values: changes.values,
         change: changes.change,
@@ -65,6 +70,7 @@ const useFormist = (initialValues, options) => {
         form,
         submitButton,
         submit,
+        clear,
         getFieldProps: field, //formal alias
         getFormProps: form, // formal alias
         getSubmitButtonProps: submitButton, // formal alias
