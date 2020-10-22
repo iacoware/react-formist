@@ -25,8 +25,8 @@ const useChangeTracking = (initialValues) => {
         else return !isEmpty(touched)
     }
 
-    const clear = () => {
-        setValues(emptyValues)
+    const clear = (defaultValues) => {
+        setValues(defaultValues || emptyValues)
     }
 
     return {

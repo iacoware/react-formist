@@ -21,3 +21,19 @@ test("clear - simple values", () => {
 
     expect(result.current.values).toStrictEqual({})
 })
+
+test("clear - reset to default values", () => {
+    const defaultValues = {
+        firstName: "Fred",
+        lastName: "Johnson",
+    }
+    const { result } = renderHook(() => useChanges())
+    act(() => {
+        result.current.change("firstName", "John")
+        result.current.change("lastName", "Fredson")
+    })
+
+    act(() => result.current.clear(defaultValues))
+
+    expect(result.current.values).toStrictEqual(defaultValues)
+})
