@@ -1,6 +1,6 @@
 export const safeFn = (fn) => (...args) => (fn ? fn(...args) : undefined)
 
-export const isInteger = (text) => !isNaN(parseInt(text, 10))
+export const isInteger = (text) => !isNaN(parseInt(text, 10)) && isFinite(text)
 
 export const isObject = (obj) =>
     obj !== null && obj !== undefined && obj.constructor === Object

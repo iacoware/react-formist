@@ -1,3 +1,7 @@
+## v1.1.1 - 2020-11-26
+
+-   Fixed bug in `isInteger` helper function. The call `isInteger("8bbbef36adf64929bba8b656fa82f05a")` was returning true. Affect formist when you use a guid inside a path like '8bbbef36adf64929bba8b656fa82f05a.name'
+
 ## v1.1.0 - 2020-10-22
 
 -   Add `clear(defaultValues | null)` function which clear current values and errors
