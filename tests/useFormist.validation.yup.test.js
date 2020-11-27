@@ -82,6 +82,28 @@ test("non yup errors", async () => {
     }
 })
 
+test("global error", async () => {
+    expect.assertions(1)
+    let schema = yup
+        .object()
+        .shape({
+            firstName: yup.string(),
+            age: yup.number(),
+        })
+        .test(
+            "not-both-empty",
+            "one of firstName and age should have a value",
+            obj => obj.firstName || obj.age,
+        )
+    const { result } = renderHook(() => useFormist({}, { schema }))
+
+    await act(() => result.current.validate())
+
+    expect(result.current.globalError).toBe(
+        "one of firstName and age should have a value",
+    )
+})
+
 test("many field, one change + onBlur", async () => {
     const schema = nameAndAgeSchema
     const { result } = renderHook(() => useFormist({}, { schema }))

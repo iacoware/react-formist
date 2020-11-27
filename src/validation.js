@@ -28,6 +28,6 @@ async function validate(options, values, path) {
         }
     } catch (err) {
         if (!isYupError(err)) throw err
-        return err
+        return Promise.resolve(err)
     }
 }

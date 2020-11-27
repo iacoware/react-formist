@@ -30,12 +30,14 @@ export function extractYupErrors(yupError) {
 
     const errors = {}
     for (const err of yupError.inner) {
-        if (!err.path) throw yupError
-
-        const path = fromYupPath(err.path)
-        const message = adaptMessage(err.message)
-        if (!errors[path]) {
-            errors[path] = message
+        if (!err.path) {
+            errors["__global"] = err.message
+        } else {
+            const path = fromYupPath(err.path)
+            const message = adaptMessage(err.message)
+            if (!errors[path]) {
+                errors[path] = message
+            }
         }
     }
 
